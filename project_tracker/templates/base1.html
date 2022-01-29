@@ -42,23 +42,21 @@
     <!--<button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>-->
-    <img src="{% static 'core/img/logos/P_T.png' %}" alt="" class="brand-gui ml-2 d d-sm-block p-2">
-    <button class="navbar-toggler sidebar-toggler d-md-down" type="button">
+    <img src="{% static 'core/img/logos/P_T.png' %}" alt="" class="brand-gui ml-2 d-none d-sm-block p-2">
+    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <ul class="nav navbar-nav d-md-down">
+
+    <ul class="nav navbar-nav d-md-down-none">
       <li class="nav-item px-3">
-        <a class="nav-link" href="{% url 'home' %}">Home</a>
+        <a class="nav-link" href="">Home</a>
       </li>
-      <!--<li class="nav-item px-3">
-        <a class="nav-link" href="#">Dashboard</a>
-      </li>-->
       <!--<li class="nav-item px-3">-->
         <!--<a class="nav-link" href="#">Settings</a>-->
       <!--</li>-->
     </ul>
     <ul class="nav navbar-nav ml-auto">
-      <!--<li class="nav-item d-md-down-none">
+      <li class="nav-item d-md-down-none">
         <a class="nav-link" href="#"><i class="fa fa-bell"></i><span class="badge badge-pill badge-danger">{{ logged_user.received_invites.count }}</span></a>
       </li>
       <li class="nav-item d-md-down-none">
@@ -72,9 +70,9 @@
       {% else %}
       <li class="text-muted">
         <a href="{% url 'login' %}">sign in</a>
-      </li>-->
-      <!--{% endif %}-->
-      <!--<li class="nav-item dropdown">
+      </li>
+      {% endif %}
+      <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">
           {% if user.is_authenticated %}
           <img src="{{ logged_user.img.url }}" class="img-avatar" alt="{{ user }}">
@@ -86,34 +84,31 @@
           <div class="dropdown-header text-center">
             <strong>Account</strong>
           </div>
-          {% if user.is_authenticated %}-->
-          <!--<a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a>-
+          {% if user.is_authenticated %}
+          <!--<a class="dropdown-item" href="#"><i class="fa fa-bell-o"></i> Updates<span class="badge badge-info">42</span></a>-->
           <a class="dropdown-item" href="#"><i class="fa fa-envelope-o"></i> Invites<span class="badge badge-success">{{ logged_user.received_invites.count }}</span></a>
-          <a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">{{ user.task_set.values.count }}</span></a>-->
-          <!--<a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comments<span class="badge badge-warning">42</span></a>
+          <a class="dropdown-item" href="#"><i class="fa fa-tasks"></i> Tasks<span class="badge badge-danger">{{ user.task_set.values.count }}</span></a>
+          <!--<a class="dropdown-item" href="#"><i class="fa fa-comments"></i> Comments<span class="badge badge-warning">42</span></a>-->
           <div class="dropdown-header text-center">
             <strong>Settings</strong>
           </div>
-          <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>-->
+          <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
           <!--<a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Settings</a>-->
           <!--<a class="dropdown-item" href="#"><i class="fa fa-usd"></i> Payments<span class="badge badge-secondary">42</span></a>-->
-            <!--<a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>
-          <div class="divider"></div>-->
-          <!--<a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock Account</a>
+            <!--<a class="dropdown-item" href="#"><i class="fa fa-file"></i> Projects<span class="badge badge-primary">42</span></a>-->
+          <div class="divider"></div>
+          <!--<a class="dropdown-item" href="#"><i class="fa fa-shield"></i> Lock Account</a>-->
 
           <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
           {% else %}
           <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Login</a>
           {% endif %}
         </div>
-      </li>-->
-      <li class="nav-item px-3">
-        <a class="nav-link" href="#"><i class="fa fa-user"></i> Login</a>
       </li>
     </ul>
-    <!--<button class="navbar-toggler aside-menu-toggler" type="button">
+    <button class="navbar-toggler aside-menu-toggler" type="button">
       <span class="navbar-toggler-icon"></span>
-    </button>-->
+    </button>
 
   </header>
 
@@ -121,15 +116,15 @@
     <div class="sidebar">
       <nav class="sidebar-nav">
         <ul class="nav">
-          <li class="nav-title">
-            Home
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a>
-          </li>
-          <!--<li class="nav-item">
-            <a class="nav-link" href="#"><i class="fa fa-tachometer-alt"></i> Dashboard</a>
-          </li>
+            <li class="nav-title">
+                Home
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-home"></i> Home</a>
+            </li>
+            <li class="nav-title">
+                Views
+              </li>
           <li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-tachometer-alt"></i> Views</a>
             <ul class="nav-dropdown-items">
@@ -140,7 +135,7 @@
                 <a class="nav-link" href="#"><i class="fa fa-user ml-2"></i> Users Views</a>
               </li>
             </ul>
-          </li>-->
+          </li>
 
           <!--<li class="nav-title">-->
             <!--Theme-->
@@ -179,7 +174,7 @@
             Login / Logout
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}" target="_top"><i class="fa fa-sign-in-alt"></i> Login</a>
+            <a class="nav-link" href="#" target="_top"><i class="fa fa-sign-out-alt"></i>Logout</a>
           </li>
           <!--<li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-star"></i> Pages</a>

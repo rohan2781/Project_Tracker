@@ -12,9 +12,9 @@ def login(request):
         if (username=="admin" and password=="admin01"):
             return render(request,'admin.html')
         elif(username=="customer" and password=="customer01"):
-            return render(request,'customer.html')
+            return render(request,'project.html')
         elif(username=="#" or password=="#"):
-            print("Rooro")
+            return HttpResponse("Hello")
 
     return render(request,'login.html')
 
@@ -22,4 +22,4 @@ def admin(request):
     return render(request,'admin.html')
 
 def customer(request):
-    return render(request,'customer,html')
+    return render(request,'project.html')
