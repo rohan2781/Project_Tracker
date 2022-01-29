@@ -1,10 +1,9 @@
 from django.contrib import admin
-from django.conf.urls import url
-from django.urls import path,include
+from django.urls import path
 from home import views
 urlpatterns = [
     path('', views.index),
-    url(r'^login/$',views.login,name='login'),
-    url(r'^admin/$',views.admin,name='admin'),
-    url(r'^customer/$',views.customer,name='customer'),
+    path('login/',views.login,name='login'),
+    path('admins/',views.admin,name='admin'),
+    path('customer/',views.customer,name='customer'),
 ]
