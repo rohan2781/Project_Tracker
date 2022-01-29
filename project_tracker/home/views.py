@@ -1,21 +1,16 @@
-from django.shortcuts import render,HttpResponse
-
+from django.shortcuts import redirect, render,HttpResponse
+from home.models import login
 def index(request):
     return render (request,'index.html')
 # Create your views here.
 
-def login(request):
+def logins(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        if (username=="admin" and password=="admin01"):
-            return render(request,'admin.html')
-        elif(username=="customer" and password=="customer01"):
-            return render(request,'project.html')
-        elif(username=="#" or password=="#"):
-            return HttpResponse("Hello")
-
+        name = request.POST['username']
+        pword = request.POST['password']
+        l=login(username=name, password=pword)
+        l.save()
+        return redirect('/project')
     return render(request,'login.html')
 
 def admin(request):
