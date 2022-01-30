@@ -161,11 +161,11 @@
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-puzzle-piece"></i> Projects</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> New Project</a>
+                <a class="nav-link" href="{% url 'new_project' %}"><i class="fa fa-plus ml-2"></i> New Project</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> New Task</a>
-              </li>
+              </li> -->
             </ul>
           </li>
 
@@ -174,7 +174,7 @@
             Login / Logout
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" target="_top"><i class="fa fa-sign-out-alt"></i>Logout</a>
+            <a class="nav-link" href="{% url 'logout' %}" target="_top"><i class="fa fa-sign-out-alt"></i>Logout</a>
           </li>
           <!--<li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-star"></i> Pages</a>

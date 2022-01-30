@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% load static %}
 
 {% block breadcrumb %}
@@ -27,10 +27,10 @@
           <p>Register your company and start managing your projects</p>
           <p>That's it, simple, easy, fast.</p>
           <p class="lead">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Set up your company</a>
+            <a class="btn btn-primary btn-lg" href="{% url 'sign-up' %}" role="button">Set up your company</a>
           </p>
           {% if not user.is_authenticated %}
-          <a href="#">Click here if you are already registered</a>
+          <a href="{% url 'login' %}">Click here if you are already registered</a>
           {% endif %}
         </div>
       </div>
