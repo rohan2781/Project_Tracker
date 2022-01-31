@@ -10,7 +10,7 @@ def index(request):
 def SignUp(request):
 
     if request.method == "POST":
-        CompanyName = request.POST['Company_Name']
+        name = request.POST['username']
         Email = request.POST['email']
         Password1 = request.POST['password1']
         Password2 = request.POST['password2']
@@ -20,17 +20,21 @@ def SignUp(request):
                 messages.info(request,'Email_id already exist')
                 return render(request,'sign_up.html')
             else:
-                user = User.objects.create_user (username=CompanyName, password=Password1, email=Email)
+                user = User.objects.create_user (username=name, password=Password1, email=Email)
                 user.save();
                 return render(request,'login.html')
         else:
-            messages.info(request,"Password not matching")
-            return render(request,'sign_up.html')
+            messages.info(request,"Password Didn't Matched Retry")
 
     return render(request,'sign_up.html')
 
 def logins(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        if request.user.username!='Rohan2781':
+            return redirect('/project')
+        else:
+            return redirect('/manager')
+    elif request.method == 'POST':
         name = request.POST['username']
         pword = request.POST['password']
 #        l=login(username=name, password=pword)
@@ -40,19 +44,15 @@ def logins(request):
 
         if user is not None:
             auth.login(request,user)
-            return render(request,'project.html')
+            if request.user.username!='Rohan2781':
+                return redirect('/project')
+            else:
+                return redirect('/manager')
         else:
             messages.info(request,"Invalid Credentials")
-            return render(request,'login.html')
 
     return render(request,'login.html')
 
 def logout_view(request):
     logout(request)
-    return render(request,'index.html')
-
-def admin(request):
-    return render(request,'admin.html')
-
-def customer(request):
-    return render(request,'project.html')
+    return redirect('/')

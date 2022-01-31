@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,HttpResponse
 from project.models import Project
 from django.contrib.auth.decorators import login_required
 from project.forms import ProjectRegistrationForm
@@ -8,7 +8,11 @@ from django.contrib.auth.models import User, auth
 # Create your views here.
 
 def project(request):
-    return render (request,'project.html')
+    if not request.user.is_authenticated:
+        messages.info(request,'Please login first')
+        return redirect('/login')
+    else:
+        return render(request,'project.html')
 
 def newProject(request):
     if request.user.is_authenticated:
@@ -32,7 +36,7 @@ def newProject(request):
                 'form': form,
             }
     else:
-        messages.info(request,'Please login first')
+        messages.info(request,'Login Required')
         return render(request,'login.html')
 
     return render(request,'new_project.html', context)

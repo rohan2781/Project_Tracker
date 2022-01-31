@@ -5,13 +5,9 @@
 {% block breadcrumb %}
 <li class="breadcrumb-item">Home</li>
 <li class="breadcrumb-item">Projects</li>
-<li class="breadcrumb-item active">Views</li>
 {% endblock breadcrumb%}
 {% block content %}
 <div class="col-md-12">
-  {% if user.is_authenticated %}
-  <li>Hello, {{user.Company_Name}}</li>
-  {% endif %}
     <div class="card">
         <div class="card-header">
             <strong>{{ projects.count }} Active Projects</strong>
