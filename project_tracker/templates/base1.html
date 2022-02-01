@@ -49,7 +49,7 @@
 
     <ul class="nav navbar-nav d-md-down-none">
       <li class="nav-item px-3">
-        <a class="nav-link" href="">Home</a>
+        <a class="nav-link" href="#">Home</a>
       </li>
       <!--<li class="nav-item px-3">-->
         <!--<a class="nav-link" href="#">Settings</a>-->
@@ -122,21 +122,19 @@
                 Views
               </li>
           <li class="nav-item nav-dropdown">
-            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-tachometer-alt"></i> Views</a>
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-tachometer-alt"></i>Client's</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-paper-plane ml-2"></i> Project's View</a>
+                <a class="nav-link" href="{% url 'sign-up' %}"><i class="fa fa-plus ml-2"></i> Register New Client</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'admin_client' %}"><i class="fa fa-paper-plane ml-2"></i> Client's View</a>
+                <a class="nav-link" href="{% url 'admin_client' %}"><i class="fa fa-paper-plane ml-2"></i> View Client's</a>
               </li>
-              <!--<li cla
               <!--<li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-user ml-2"></i> Users Views</a>
               </li>-->
             </ul>
           </li>
-
           <!--<li class="nav-title">-->
             <!--Theme-->
           <!--</li>-->
@@ -161,7 +159,10 @@
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-puzzle-piece"></i> Projects</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'new_project' %}"><i class="fa fa-plus ml-2"></i> New Project</a>
+                <a class="nav-link" href="{% url 'new_project' %}"><i class="fa fa-plus ml-2"></i> Register New Project</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-paper-plane ml-2"></i> View Project's</a>
               </li>
               <!-- <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> New Task</a>
@@ -198,7 +199,6 @@
       <ol class="breadcrumb">
         {% block breadcrumb %}
         <li class="breadcrumb-item active">Home</li>
-        <li class="breadcrumb-item">Dashboard</li>
         {% endblock breadcrumb%}
 
         <!-- Breadcrumb Menu-->
@@ -226,7 +226,7 @@
     <script src="{% static 'core/vendors/js/bootstrap.min.js'%}"></script>
     <script src="{% static 'core/vendors/js/pace.min.js'%}"></script>
     <script src="{% static 'core/vendors/js/Chart.min.js'%}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
   <!-- CoreUI main scripts -->
 
     <script src="{% static 'core/js/app.js'%}"></script>
@@ -239,3 +239,5 @@
 </body>
 {% endblock body %}
 </html>
+
+

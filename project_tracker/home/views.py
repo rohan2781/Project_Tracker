@@ -27,7 +27,11 @@ def SignUp(request):
                 reg = Client(first_name=first_name, second_name=second_name, email=email, password=password)
                 reg.save()
                 messages.info(request,'Client Added Successfully')
-                return redirect('/manager/admin_client')
+                return redirect('/sign-up/')
+    else:
+        client = ClientRegistration()
+    return render(request,'sign_up.html',{'form':client})
+
 #    if requests.method == "POST":
 #        name = request.POST['username']
 #        Email = request.POST['email']
@@ -45,16 +49,13 @@ def SignUp(request):
 #        else:
 #            messages.info(request,"Password Didn't Matched Retry")
 #
-    else:
-        client = ClientRegistration()
-    return render(request,'sign_up.html',{'form':client})
 
 # For removing Client
 def remove_client(request,id):
     if request.method == "POST":
         pi = Client.objects.get(pk=id)
         pi.delete()
-        return redirect('/manager/admin_client')
+        return redirect('/manager/client')
     else:
         pi=Client.objects.get(pk=id)
     client = Client.objects.get(pk=id)
@@ -67,15 +68,11 @@ def update_client(request,id):
         client = ClientRegistration(request.POST, instance=pi)
         if client.is_valid():
             client.save()
-        return redirect('/manager/admin_client')
+        return redirect('/manager/client')
     else:
         pi = Client.objects.get(pk=id)
         client = ClientRegistration(instance=pi)
     return render(request,'update_client.html',{'form':client})
-
-
-
-
 
 
 def logins(request):
