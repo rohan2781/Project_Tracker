@@ -10,9 +10,12 @@
                 <div class="card-group">
                     <div class="card p-4">
                         <div class="card-body">
-                            <form method="POST" action="{% url 'sign-up' %}">
+                          <p class="text-center">Register a New Client</p>
+                            <form method="POST" action="">
                                 {% csrf_token %}
-                                <h1>Sign-Up</h1>
+                                {{form.as_p}}
+                                <input type="Submit" class='btn btn-success' name="" value="Save">
+                              <!--  <h1>Sign-Up</h1>
                                 <p class="text-muted">Sign In to your account</p>
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
@@ -52,13 +55,13 @@
                                     </div>
                                     <!--<div class="col-6 text-right">
                                         <button type="button" class="btn btn-link px-0">Forgot password?</button>
-                                    </div>-->
-                                </div>
+                                    </div>
+                                </div> -->
                             </form>
                             <br>
                             <div class="">
                               {% for message in messages %}
-                              <h5>{{ message }}</h5>
+                              <p class="text-center alert alert-info">{{ message }}</p>
                               {% endfor %}
                             </div>
                         </div>

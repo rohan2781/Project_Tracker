@@ -1,0 +1,71 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">Home</li>
+{% endblock breadcrumb%}
+
+{% block content %}
+<div class="container-fluid">
+ <div id="ui-view" style="opacity: 1;"><div class="animated fadeIn">
+   <div class="row">
+   <div class="col-12">
+     <div class="card">
+     <div class="card-header">
+       <i class="fa fa-align-justify"></i> Main info
+       <div class="card-actions">
+          <!-- <a href="{% url 'sign-up' %}">
+           <small class="text-muted">+</small>
+         </a> -->
+       </div>
+     </div>
+     <div class="card-body">
+    <h3><a href="{% url 'sign-up' %}" class="btn btn-primary">Add Client</a></h3>
+
+    {% if client %}
+    <table class="table table-hover; text-center align-middle">
+      <thead>
+        <tr>
+          <th scope="col">Client id</th>
+          <th scope="col">First name</th>
+          <th scope="col">Last name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+    <tbody>
+      {% for i in client %}
+      <tr>
+        <td>{{i.id}}</td>
+        <td>{{i.first_name}}</td>
+        <td>{{i.second_name}}</td>
+        <td>{{i.email}}</td>
+        <td><a href="{% url 'update_client' i.id %}" class="btn btn-warning">Edit</a>
+          <a href="{% url 'remove_client' i.id %}" class="btn btn-danger">Delete</a>
+            <!-- <form class="d-inline" action="{% url 'remove_client' i.id %}" method="POST">
+            {% csrf_token %}
+            <input type="Submit" class="btn btn-danger" name="" value="Delete">
+          </form>--></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    {% else %}
+    <h4 class = 'text-center alert alert-warning'>No records to show</h4>
+    {% endif %}
+       <div class="jumbotron bg-white">
+
+         <!-- <h1 class="display-4">Hello, Admin!</h1>
+         <p class="lead">Welcome to the Project Management System.</p>
+         <hr class="my-4"> -->
+         <p class="lead">
+       </div>
+     </div>
+     </div>
+   </div>
+   </div>
+   </div>
+ </div>
+</div>
+
+{% endblock %}
