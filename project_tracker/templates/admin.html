@@ -8,16 +8,27 @@
 <div class="col-md-12">
   <div class="card">
       <div class="card-header">
-        <i class="fa fa-align-justify"></i>Hello Admin
+        <!-- <i class="fa fa-align-justify"></i>Hello Admin -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark"><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+          <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item"> <a class="nav-link" href="{% url 'sign-up' %}" data-abc="true">Register Client</a> </li>
+              <li class="nav-item"> <a class="nav-link" href="{% url 'admin_client' %}" data-abc="true">View Client</a> </li>
+              <li class="nav-item"> <a class="nav-link" href="{% url 'new_project' %}" data-abc="true">Register Project</a> </li>
+              <li class="nav-item"> <a class="nav-link" href="#" data-abc="true">View Project</a> </li>
+            </ul>
+            <form onsubmit="event.preventDefault()" class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" placeholder="Search"> <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> </form>
+          </div>
+        </nav>
       </div>
-      <style>
+      <!-- <style>
         #table2 {
           border-collapse: collapse;
           width:95%;
           font-family:sans-serif;
           font-weight:bold;
         }
-        
+
         #th2, #td2 {
           text-align: center;
           padding: 10px;
@@ -28,7 +39,7 @@
           <form method='POST' action='/manager/'>
             {% csrf_token %}
       <table border=0 id='table2' align='left' class="col-md-12">
-        <tr id='tr2'> 
+        <tr id='tr2'>
         <td id='td2'>
           <h3>Clients</h3>
         </td>
@@ -62,7 +73,7 @@
         </tr>
       </table>
     </form>
-    </ol>
+    </ol> -->
   </div>
 </div>
 
@@ -73,5 +84,3 @@
   </div>
 </div>
 {% endblock %}
-
-
