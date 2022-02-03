@@ -1,7 +1,8 @@
 {% extends 'admin.html' %}
 {% load static %}
 {% block breadcrumb %}
-<li class="breadcrumb-item active">Admin / Project-Registration</li>
+<li class="breadcrumb-item active">Admin</li>
+<li class="breadcrumb-item active">Project-Registration</li>
 {% endblock breadcrumb%}
 {% block content1 %}
 <div class="card-header">
@@ -21,6 +22,9 @@
                                   Congratulations, your project was created!
                               </div>
                             {% endif %}
+                            {% for message in messages %}
+                                <p class="text-center alert alert-info">{{ message }}</p>
+                            {% endfor %}
                                 {% csrf_token %}
                                 <h1>Projects</h1>
                                 <p class="text-muted">Create your projects here</p>
@@ -34,16 +38,16 @@
                                         </div>
 
                                         {{ form.name }}
-                                        {% if form.name.errors %}
+                                        <!--{% if form.name.errors %}
                                             <ol>
                                             {% for error in form.name.errors %}
                                                 <li><strong>{{ error|escape }}</strong></li>
                                             {% endfor %}
                                             </ol>
-                                        {% endif %}
+                                        {% endif %}-->
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label class="col-form-label">Assign. <i>Crtl+click for multiple selection</i></label>
                                     <div class="input-group">
                                         <div class="input-group-append">
@@ -58,23 +62,28 @@
                                             </ol>
                                         {% endif %}
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="fa fa-calculator"></i></span>
                                         </div>
-                                        {{ form.efforts }}
-                                        {% if form.efforts.errors %}
+                                        {{ form.efforts}}
+                                        <!--<select name='person'>
+                                        {% for i in client %}
+                                        <option value="{{ i.first_name}}">{{ i.first_name}}</option>
+                                        {% endfor %}
+                                        </select>-->
+                                        <!--{% if form.efforts.errors %}
                                             <ol>
                                             {% for error in form.efforts.errors %}
                                                 <li><strong>{{ error|escape }}</strong></li>
                                             {% endfor %}
                                             </ol>
-                                        {% endif %}
+                                        {% endif %}-->
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <!--<div class="form-group">
                                     <label class="col-form-label">Status</label>
                                     <div class="input-group">
                                         <div class="input-group-append">
@@ -89,7 +98,7 @@
                                             </ol>
                                         {% endif %}
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label class="col-form-label">Dead Line</label>
                                     <div class="input-group">
@@ -99,22 +108,22 @@
                                         {{ form.dead_line }}
                                     </div>
 
-                                    {% if form.dead_line.errors %}
+                                    <!--{% if form.dead_line.errors %}
                                             <ol>
                                             {% for error in form.dead_line.errors %}
                                                 <li><strong>{{ error|escape }}</strong></li>
                                             {% endfor %}
                                             </ol>
-                                        {% endif %}
+                                        {% endif %}-->
                                 </div>
-                                <div class="form-group">
-                                  <!--  <label class="col-form-label">Company</label>
+                                <!--<div class="form-group">
+                                     <label class="col-form-label">Company</label>
                                     <div class="input-group">
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="fa fa-industry"></i></span>
                                         </div>
                                         {{ form.company }}
-                                    </div> -->
+                                    </div>
 
                                     {% if form.company.errors %}
                                             <ol>
@@ -123,7 +132,7 @@
                                             {% endfor %}
                                             </ol>
                                         {% endif %}
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div class="input-group-append">
@@ -132,13 +141,13 @@
                                         {{ form.complete_per }}
                                     </div>
 
-                                    {% if form.complete_per.errors %}
+                                    <!--{% if form.complete_per.errors %}
                                             <ol>
                                             {% for error in form.complete_per.errors %}
                                                 <li><strong>{{ error|escape }}</strong></li>
                                             {% endfor %}
                                             </ol>
-                                        {% endif %}
+                                        {% endif %}-->
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label">Description</label>
@@ -149,13 +158,13 @@
                                         {{ form.description }}
                                     </div>
 
-                                    {% if form.description.errors %}
+                                    <!--{% if form.description.errors %}
                                             <ol>
                                             {% for error in form.description.errors %}
                                                 <li><strong>{{ error|escape }}</strong></li>
                                             {% endfor %}
                                             </ol>
-                                        {% endif %}
+                                        {% endif %}-->
                                 </div>
 
                                 <div class="">
@@ -163,7 +172,7 @@
                                     <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
                                 </div>
                             </form>
-                            {{ form.errors }}
+                            <!--{{ form.errors }}-->
                     </div>
                 </div>
             </div>

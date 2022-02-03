@@ -2,7 +2,8 @@
 <!--{% load static %}-->
 
 {% block breadcrumb %}
-<li class="breadcrumb-item active">Admin / Client-Registration</li>
+<li class="breadcrumb-item active">Admin</li>
+<li class="breadcrumb-item active">Client-Registration</li>
 {% endblock breadcrumb%}
 {% block content1 %}
 <div class="card-header">
@@ -15,7 +16,12 @@
                 <div class="card-group">
                     <div class="card p-4">
                         <div class="card-body">
-                          <p class="text-center">Register a New Client</p>
+                            <div class="">
+                                {% for message in messages %}
+                                <p class="text-center alert alert-info">{{ message }}</p>
+                                {% endfor %}
+                              </div>
+                          <p class="text-left" style='font-size:20px'><b>Register a New Client</b></p><br>
                             <form method="POST" action="">
                                 {% csrf_token %}
                                 {{form.as_p}}
@@ -64,11 +70,11 @@
                                 </div> -->
                             </form>
                             <br>
-                            <div class="">
+                            <!--<div class="">
                               {% for message in messages %}
                               <p class="text-center alert alert-info">{{ message }}</p>
                               {% endfor %}
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <!--<div class="card text-white bg-primary py-5">

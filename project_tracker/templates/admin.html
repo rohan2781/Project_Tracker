@@ -1,4 +1,63 @@
 {% extends 'base1.html' %}
+{% block navigate %}
+      <li class="nav-item px-3">
+        <a class="nav-link" href="{% url 'manager' %}">Home</a>
+      </li>
+{% endblock %}
+{% block home %}
+            <li class="nav-title">
+                Home
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'manager' %}"><i class="fa fa-home"></i> Home</a>
+            </li>
+{% endblock %}
+{% block client %}
+          <li class="nav-title">
+            Views
+          </li>
+          <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-tachometer-alt"></i>Client's</a>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'sign-up' %}"><i class="fa fa-plus ml-2"></i> Register Client</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin_client' %}"><i class="fa fa-paper-plane ml-2"></i> View Client's</a>
+              </li>
+              <!--<li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-user ml-2"></i> Users Views</a>
+              </li>-->
+            </ul>
+          </li>
+{% endblock %}
+{% block project %}
+          <li class="nav-title">
+            Project
+          </li>
+          <!--<li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-industry"></i> Company</a>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> New Company</a>
+              </li>
+            </ul>
+          </li>-->
+          <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-puzzle-piece"></i> Projects</a>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'new_project' %}"><i class="fa fa-plus ml-2"></i> Register Project</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'projects' %}"><i class="fa fa-paper-plane ml-2"></i> View Project's</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> New Task</a>
+              </li> -->
+            </ul>
+          </li>
+{% endblock%}
 
 {% load static %}
 {% block breadcrumb %}
@@ -7,15 +66,18 @@
 {% block content %}
 <div class="col-md-12">
   <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i>Hello Admin
+  </div>
       <div class="card-header">
         <!-- <i class="fa fa-align-justify"></i>Hello Admin -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark"><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
           <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item"> <a class="nav-link" href="{% url 'sign-up' %}" data-abc="true">Register Client</a> </li>
-              <li class="nav-item"> <a class="nav-link" href="{% url 'admin_client' %}" data-abc="true">View Client</a> </li>
-              <li class="nav-item"> <a class="nav-link" href="{% url 'new_project' %}" data-abc="true">Register Project</a> </li>
-              <li class="nav-item"> <a class="nav-link" href="#" data-abc="true">View Project</a> </li>
+              <li class="nav-item" style='padding:5px'> <a class="nav-link" style='font-size:15px' href="{% url 'sign-up' %}" data-abc="true">Register Client</a> </li>
+              <li class="nav-item" style='padding:5px'> <a class="nav-link" style='font-size:15px' href="{% url 'admin_client' %}" data-abc="true">View / Edit Clients</a> </li>
+              <li class="nav-item" style='padding:5px'> <a class="nav-link" style='font-size:15px' href="{% url 'new_project' %}" data-abc="true">Register Project</a> </li>
+              <li class="nav-item" style='padding:5px'> <a class="nav-link" style='font-size:15px' href="{% url 'projects' %}" data-abc="true">View / Edit Projects</a> </li>
             </ul>
             <form onsubmit="event.preventDefault()" class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" placeholder="Search"> <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> </form>
           </div>

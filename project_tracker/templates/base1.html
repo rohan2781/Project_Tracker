@@ -48,9 +48,11 @@
     </button>
 
     <ul class="nav navbar-nav d-md-down-none">
+      {% block navigate %}
       <li class="nav-item px-3">
         <a class="nav-link" href="#">Home</a>
       </li>
+      {% endblock %}
       <!--<li class="nav-item px-3">-->
         <!--<a class="nav-link" href="#">Settings</a>-->
       <!--</li>-->
@@ -112,15 +114,18 @@
     <div class="sidebar">
       <nav class="sidebar-nav">
         <ul class="nav">
+          {% block home %}
             <li class="nav-title">
                 Home
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-home"></i> Home</a>
             </li>
-            <li class="nav-title">
+            {% endblock %}
+            {% block client %}
+            <!--<li class="nav-title">
                 Views
-              </li>
+            </li>
           <li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-tachometer-alt"></i>Client's</a>
             <ul class="nav-dropdown-items">
@@ -129,12 +134,13 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'admin_client' %}"><i class="fa fa-paper-plane ml-2"></i> View Client's</a>
-              </li>
+              </li>-->
               <!--<li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-user ml-2"></i> Users Views</a>
               </li>-->
-            </ul>
-          </li>
+            <!--</ul>
+          </li>-->
+          {% endblock %}
           <!--<li class="nav-title">-->
             <!--Theme-->
           <!--</li>-->
@@ -144,8 +150,9 @@
           <!--<li class="nav-item">-->
             <!--<a href="typography.html" class="nav-link"><i class="fa fa-user"></i> Typograhy</a>-->
           <!--</li>-->
+          {% block project %}
           <li class="nav-title">
-            Register
+            Project
           </li>
           <!--<li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-industry"></i> Company</a>
@@ -158,9 +165,9 @@
           <li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-puzzle-piece"></i> Projects</a>
             <ul class="nav-dropdown-items">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'new_project' %}"><i class="fa fa-plus ml-2"></i> Register Project</a>
-              </li>
+              <!--<li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> Register Project</a>
+              </li>-->
               <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-paper-plane ml-2"></i> View Project's</a>
               </li>
@@ -169,6 +176,8 @@
               </li> -->
             </ul>
           </li>
+          {% endblock%}
+
 
           <li class="divider"></li>
           <li class="nav-title">

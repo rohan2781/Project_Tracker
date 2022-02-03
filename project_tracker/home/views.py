@@ -1,9 +1,10 @@
 from django.shortcuts import redirect,reverse,render,HttpResponse,HttpResponseRedirect
-from django.contrib.auth import logout
+from django.contrib.auth import logout,authenticate
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from .forms import ClientRegistration
 from .models import Client
+
 
 def index(request):
     return render (request,'index.html')
@@ -11,20 +12,32 @@ def index(request):
 
 #def remove_client(request):
 #    return render(request,'remove_client.html')
-
+def logins(request):
+    if request.method == 'POST':
+        first_name = request.POST['username']
+        password = request.POST['password']
+        if Client.objects.filter(first_name=first_name,password=password).exists():
+            if first_name=='Rohan2781':
+                return redirect('/manager')
+            else:     
+                return redirect('/project')
+        else:
+            messages.info(request,"Invalid Credentials")
+    
+    return render(request,'login.html')
 # For adding client
 def SignUp(request):
     if request.method == 'POST':
         client = ClientRegistration(request.POST)
         if client.is_valid():
             first_name = client.cleaned_data['first_name']
-            second_name = client.cleaned_data['second_name']
+            last_name = client.cleaned_data['last_name']
             email = client.cleaned_data['email']
             password = client.cleaned_data['password']
             if Client.objects.filter(email=email).exists():
-                messages.info(request,"Email already exist")
+                messages.info(request,"Email already exists")
             else:
-                reg = Client(first_name=first_name, second_name=second_name, email=email, password=password)
+                reg = Client(first_name=first_name, last_name=last_name, email=email, password=password)
                 reg.save()
                 messages.info(request,'Client Added Successfully')
                 return redirect('/sign-up/')
@@ -55,6 +68,7 @@ def remove_client(request,id):
     if request.method == "POST":
         pi = Client.objects.get(pk=id)
         pi.delete()
+        messages.info(request,"Deleted Successfully")
         return redirect('/manager/client')
     else:
         pi=Client.objects.get(pk=id)
@@ -68,6 +82,7 @@ def update_client(request,id):
         client = ClientRegistration(request.POST, instance=pi)
         if client.is_valid():
             client.save()
+            messages.info(request,"Updated Succesfully")
         return redirect('/manager/client')
     else:
         pi = Client.objects.get(pk=id)
@@ -75,30 +90,6 @@ def update_client(request,id):
     return render(request,'update_client.html',{'form':client})
 
 
-def logins(request):
-    if request.user.is_authenticated:
-        if request.user.username!='Rohan2781':
-            return redirect('/project')
-        else:
-            return redirect('/manager')
-    elif request.method == 'POST':
-        name = request.POST['username']
-        pword = request.POST['password']
-#        l=login(username=name, password=pword)
-#        l.save()
-#        return redirect('/project')
-        user = auth.authenticate(username=name,password=pword)
-
-        if user is not None:
-            auth.login(request,user)
-            if request.user.username!='Rohan2781':
-                return redirect('/project')
-            else:
-                return redirect('/manager')
-        else:
-            messages.info(request,"Invalid Credentials")
-
-    return render(request,'login.html')
 
 def logout_view(request):
     logout(request)
