@@ -6,12 +6,14 @@ from .forms import ProjectRegistrationForm
 from home.models import Client
 # Create your views here.
 
-def project(request):
+def project(request,id):
     if not request.user.is_authenticated:
         messages.info(request,'Please login first')
         return redirect('/login')
     else:
-        return render(request,'project.html')
+        project=Project.objects.get(pk=id)
+        client=Client.objects.get(email=project.person)
+        return render(request,'project.html',{'project':project,'client':client})
 
 def projects(request):
     if not request.user.is_authenticated:

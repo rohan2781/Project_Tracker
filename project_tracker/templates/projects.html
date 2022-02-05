@@ -49,7 +49,7 @@
     {{ i.name }}
     </td>
     <td id='td1' width='70px' align='center'>
-      <a href="{% url 'project' %}"><button id='button'>VIEW</button></a>
+      <a href="{% url 'project' i.id %}"><button id='button'>VIEW</button></a>
     </td>
     <td id='td1' width='70px' align='center'>
       <a href="{% url 'update_project' i.id %}"><button id='button'>UPDATE</button></a>
