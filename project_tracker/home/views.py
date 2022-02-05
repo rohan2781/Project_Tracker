@@ -1,10 +1,9 @@
 from django.shortcuts import redirect,reverse,render,HttpResponse,HttpResponseRedirect
-from django.contrib.auth import logout,authenticate
-from django.contrib.auth.models import User, auth
+from django.contrib.auth import logout
 from django.contrib import messages
+from project.models import Project
 from .forms import ClientRegistration
 from .models import Client
-
 
 def index(request):
     return render (request,'index.html')
@@ -14,17 +13,26 @@ def index(request):
 #    return render(request,'remove_client.html')
 def logins(request):
     if request.method == 'POST':
-        first_name = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
-        if Client.objects.filter(first_name=first_name,password=password).exists():
-            if first_name=='Rohan2781':
+        if Client.objects.filter(email=email,password=password).exists():
+            if email=='rohan@gmail.com':
                 return redirect('/manager')
-            else:     
-                return redirect('/project')
+            else:
+                client=Client.objects.get(email=email)
+                return redirect('/account/'+str(client.id))
+                
         else:
             messages.info(request,"Invalid Credentials")
     
     return render(request,'login.html')
+
+
+def client(request,id):
+    client=Client.objects.get(pk=id)
+    project=Project.objects.filter(person=client.email)
+    return render(request,'login_client.html',{'project':project})
+
 # For adding client
 def SignUp(request):
     if request.method == 'POST':
