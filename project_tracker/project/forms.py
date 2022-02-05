@@ -16,7 +16,8 @@ class ProjectRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = '__all__'
+        fields=('name','efforts','dead_line','complete_per','description')
+        #fields = '__all__'
 
     def save(self, commit=True):
         Project = super(ProjectRegistrationForm, self).save(commit=False)
@@ -39,7 +40,7 @@ class ProjectRegistrationForm(forms.ModelForm):
         self.fields['efforts'].widget.attrs['class'] = 'form-control'
         self.fields['efforts'].widget.attrs['placeholder'] = 'Amount Decided'
         self.fields['dead_line'].widget.attrs['class'] = 'form-control'
-        self.fields['dead_line'].widget.attrs['placeholder'] = 'Dead Line, type a date'
+        self.fields['dead_line'].widget.attrs['placeholder'] = 'Dead Line, YYYY-MM-DD'
         self.fields['complete_per'].widget.attrs['class'] = 'form-control'
         self.fields['complete_per'].widget.attrs['placeholder'] = 'Complete %'
         self.fields['description'].widget.attrs['class'] = 'form-control'

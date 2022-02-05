@@ -46,7 +46,11 @@
         {{forloop.counter}}.
       </td>
     <td id='td1' style='text-align: left;'>
+    {% if i.last_name == 'Admin' %}
+    {{ 'Admin'}}
+    {% else %}
     {{ i.first_name }} {{ i.last_name }}
+    {% endif %}
     </td>
     <td id='td1' width='70px' align='center'>
       <a href="{% url 'update_client' i.id %}"><button id='button'>UPDATE</button></a>

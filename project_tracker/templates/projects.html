@@ -7,6 +7,11 @@
 <div class="card-header">
     <i class="fa fa-align-justify"></i>Projects
 </div>
+<div class="">
+  {% for message in messages %}
+  <p class="text-center alert alert-info">{{ message }}</p>
+  {% endfor %}
+</div>
 <style>
     #table1 {
       border-collapse: collapse;
@@ -44,10 +49,13 @@
     {{ i.name }}
     </td>
     <td id='td1' width='70px' align='center'>
-      <a href=""><button id='button'>UPDATE</button></a>
+      <a href="{% url 'project' %}"><button id='button'>VIEW</button></a>
+    </td>
+    <td id='td1' width='70px' align='center'>
+      <a href="{% url 'update_project' i.id %}"><button id='button'>UPDATE</button></a>
     </td>
     <td id='td1' width='50px'>
-      <a href=""><i class="fa fa-trash" style='cursor: pointer'></i></a>
+      <a href="{% url 'remove_project' i.id %}"><i class="fa fa-trash" style='cursor: pointer'></i></a>
     </td>
     </tr>
     {%endfor%}
