@@ -31,7 +31,7 @@ def logins(request):
 def client(request,id):
     client=Client.objects.get(pk=id)
     project=Project.objects.filter(person=client.email)
-    return render(request,'login_client.html',{'project':project})
+    return render(request,'login_client.html',{'project':project,'client':client})
 
 # For adding client
 def SignUp(request):
@@ -75,7 +75,10 @@ def SignUp(request):
 def remove_client(request,id):
     if request.method == "POST":
         pi = Client.objects.get(pk=id)
+        project=Project.objects.filter(person=pi.email)
         pi.delete()
+        for i in project:
+            i.delete()
         messages.info(request,"Deleted Successfully")
         return redirect('/manager/client')
     else:
@@ -87,14 +90,17 @@ def remove_client(request,id):
 def update_client(request,id):
     if request.method == 'POST':
         pi = Client.objects.get(pk=id)
+        temp=pi.email
         client = ClientRegistration(request.POST, instance=pi)
         if client.is_valid():
-            client.save()
-            messages.info(request,"Updated Succesfully")
-        return redirect('/manager/client')
-    else:
-        pi = Client.objects.get(pk=id)
-        client = ClientRegistration(instance=pi)
+            if request.POST['email']==temp:
+                client.save()
+                messages.info(request,"Updated Succesfully")
+                return redirect('/manager/client')
+            else:
+                messages.info(request,"Can't Change Email")
+    pi = Client.objects.get(pk=id)
+    client = ClientRegistration(instance=pi)
     return render(request,'update_client.html',{'form':client})
 
 

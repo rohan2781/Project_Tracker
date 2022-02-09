@@ -67,9 +67,8 @@
       <li class="nav-item d-md-down-none">
         <a class="nav-link" href="#"><i class="fa fa-map-marker"></i></a>
       </li>-->
-      {% if user.is_authenticated %}
-      <li class="text-muted">Hello, {{ user.username }}</li>
-      {% endif %}
+      {% block greeting %}
+      {% endblock %}
       <!--<li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="" role="button" aria-haspopup="true" aria-expanded="false">
           {% if user.is_authenticated %}
@@ -104,9 +103,10 @@
         </div>
       </li>-->
     </ul>
-    <button class="navbar-toggler aside-menu-toggler" type="button">
+    <span style='padding:8px'></span>
+    <!--<button class="navbar-toggler aside-menu-toggler" type="button">
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button>-->
 
   </header>
 

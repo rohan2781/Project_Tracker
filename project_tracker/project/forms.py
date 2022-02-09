@@ -1,6 +1,7 @@
 from django import forms
 from .models import Project
 from home.models import Client
+import datetime
 
 class ProjectRegistrationForm(forms.ModelForm):
     name = forms.CharField(max_length=80)

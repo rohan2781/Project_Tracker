@@ -48,14 +48,21 @@
     <td id='td1' style='text-align: left;'>
     {{ i.name }}
     </td>
+    <!--{% for j in client %}
+      {% if j.email == i.person %}
+      <td id='td1' style='text-align: center;'>
+      Client : {{j.first_name}}
+      </td>
+      {% endif %}
+      {% endfor %}-->
     <td id='td1' width='70px' align='center'>
       <a href="{% url 'project' i.id %}"><button id='button'>VIEW</button></a>
     </td>
     <td id='td1' width='70px' align='center'>
-      <a href="{% url 'update_project' i.id %}"><button id='button'>UPDATE</button></a>
+      <a href="{% url 'update_project' i.id %}"><i class="fa fa-edit" style='cursor: pointer;font-size:20px'></i></a></a>
     </td>
     <td id='td1' width='50px'>
-      <a href="{% url 'remove_project' i.id %}"><i class="fa fa-trash" style='cursor: pointer'></i></a>
+      <a href="{% url 'remove_project' i.id %}"><i class="fa fa-trash" style='cursor: pointer;font-size:16px'></i></a>
     </td>
     </tr>
     {%endfor%}

@@ -1,4 +1,7 @@
 {% extends 'base1.html' %}
+{% block greeting %}
+<li class="text-muted">Hello, {{ client.first_name }}</li>
+{% endblock %}
 {% block breadcrumb %}
 <li class="breadcrumb-item active">Home</li>
 <li class="breadcrumb-item active">Project's</li>

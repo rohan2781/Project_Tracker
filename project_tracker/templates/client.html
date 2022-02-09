@@ -52,12 +52,14 @@
     {{ i.first_name }} {{ i.last_name }}
     {% endif %}
     </td>
-    <td id='td1' width='70px' align='center'>
-      <a href="{% url 'update_client' i.id %}"><button id='button'>UPDATE</button></a>
+    <td id='td1' width='70px'>
+      <a href="{% url 'update_client' i.id %}"><i class="fa fa-edit" style='cursor: pointer;font-size:20px'></i></a>
     </td>
-    <td id='td1' width='50px'>
-      <a href="{% url 'remove_client' i.id %}"><i class="fa fa-trash" style='cursor: pointer'></i></a>
+    {% if i.last_name != 'Admin' %}
+    <td id='td1' width='70px'>
+      <a href="{% url 'remove_client' i.id %}"><i class="fa fa-trash" style='cursor: pointer;font-size:16px'></i></a>
     </td>
+    {% endif %}
     </tr>
     {%endfor%}
   </table>
