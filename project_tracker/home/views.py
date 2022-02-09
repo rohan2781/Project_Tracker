@@ -4,6 +4,7 @@ from django.contrib import messages
 from project.models import Project
 from .forms import ClientRegistration
 from .models import Client
+from manager.models import Developer
 
 def index(request):
     return render (request,'index.html')
@@ -21,10 +22,10 @@ def logins(request):
             else:
                 client=Client.objects.get(email=email)
                 return redirect('/account/'+str(client.id))
-                
+
         else:
             messages.info(request,"Invalid Credentials")
-    
+
     return render(request,'login.html')
 
 
@@ -36,19 +37,32 @@ def client(request,id):
 # For adding client
 def SignUp(request):
     if request.method == 'POST':
+#        id = request.POST.getlist('developer')
+#        return HttpResponse(request.POST.get('developer')+"a")
         client = ClientRegistration(request.POST)
+#        id = request.POST['id']
         if client.is_valid():
             first_name = client.cleaned_data['first_name']
             last_name = client.cleaned_data['last_name']
             email = client.cleaned_data['email']
             password = client.cleaned_data['password']
-            if Client.objects.filter(email=email).exists():
-                messages.info(request,"Email already exists")
+            if request.POST.get('developer') == "1":
+                if Developer.objects.filter(email=email).exists():
+                    messages.info(request,"Email already taken")
+                else:
+                    reg = Developer(first_name=first_name, last_name=last_name, email=email, password=password)
+                    reg.save()
+                    messages.info(request,'Developer Added Successfully')
+                    return redirect('/sign-up/')
             else:
-                reg = Client(first_name=first_name, last_name=last_name, email=email, password=password)
-                reg.save()
-                messages.info(request,'Client Added Successfully')
-                return redirect('/sign-up/')
+                if Client.objects.filter(email=email).exists():
+                    messages.info(request,"Email already exists")
+                else:
+                    reg = Client(first_name=first_name, last_name=last_name, email=email, password=password)
+                    reg.save()
+                    messages.info(request,'Client Added Successfully')
+                    return redirect('/sign-up/')
+
     else:
         client = ClientRegistration()
     return render(request,'sign_up.html',{'form':client})
