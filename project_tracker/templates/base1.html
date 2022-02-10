@@ -179,8 +179,39 @@
           
           {% endblock%}
 
+<<<<<<< HEAD
           {% block developer %}
           {% endblock %}
+=======
+          <li class="nav-title">
+            Developer
+          </li>
+          <!--<li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-industry"></i> Company</a>
+            <ul class="nav-dropdown-items">
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> New Company</a>
+              </li>
+            </ul>
+          </li>-->
+          <li class="nav-item nav-dropdown">
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="fa fa-puzzle-piece"></i>Developer</a>
+            <ul class="nav-dropdown-items">
+              <!--<li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> Register Project</a>
+              </li>-->
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'sign-up' %}"><i class="fa fa-paper-plane ml-2"></i>Register Developer</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'view_developers' %}"><i class="fa fa-paper-plane ml-2"></i>View Developer's</a>
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> New Task</a>
+              </li> -->
+            </ul>
+          </li>
+>>>>>>> 15680fb7f029410bab0a3bbbd14cbc8c71c38e42
 
           <li class="divider"></li>
           <li class="nav-title">
