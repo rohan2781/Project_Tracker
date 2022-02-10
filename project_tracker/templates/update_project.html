@@ -26,6 +26,24 @@
                                   {% endif %}
                                   {% endfor %}
                                   </select><br><br>
+                                  Update Developer: 
+                                  <table border=0 cellpadding=3 cellspacing=3>
+                                        
+                                    {% for i in dev %}
+                                    <tr>
+                                    <td>
+                                    {% if i.password == 'set' %}
+                                    <input class='checkmark' checked=check  type="checkbox" id="developer" name="developer" value="{{i.email}}">
+                                    {% else %}
+                                    <input class='checkmark'  type="checkbox" id="developer" name="developer" value="{{i.email}}">
+                                    {% endif %}
+                                    </td>
+                                    <td>
+                                    <label clsss='container' for="developer"><b>{{i.first_name}} - {{i.last_name}}</b></label>
+                                    </td>
+                                     </tr>
+                                    {% endfor %}
+                                    </table><br>
                                 <input type="Submit" class='btn btn-success' name="" value="Update">
                                 <a href="{% url 'projects' %}" class="btn btn-success">Return</a>
                             </form>

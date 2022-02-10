@@ -5,6 +5,9 @@
 <li class="breadcrumb-item active">Project-Registration</li>
 {% endblock breadcrumb%}
 {% block content1 %}
+
+
+
 <div class="card-header">
     <i class="fa fa-align-justify"></i>Register Project
 </div>
@@ -102,6 +105,43 @@
                                         {% endif %}-->
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-form-label">Assign Developer's</label>
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fa fa-users"></i></span>
+                                        </div>
+                                        <table border=0 cellpadding=3 cellspacing=3>
+                                        
+                                        {% for i in dev %}
+                                        <tr>
+                                        <td>
+                                        <input class='checkmark' type="checkbox" id="developer" name="developer" value="{{i.email}}">
+                                        </td>
+                                        <td>
+                                        <label clsss='container' for="developer"><b>{{i.first_name}} - {{i.last_name}}</b></label>
+                                        </td>
+                                         </tr>
+                                        {% endfor %}
+                                      
+                                        </table>
+                                        <!--{% if form.efforts.errors %}
+                                            <ol>
+                                            {% for error in form.efforts.errors %}
+                                                <li><strong>{{ error|escape }}</strong></li>
+                                            {% endfor %}
+                                            </ol>
+                                        {% endif %}-->
+                                    </div>
+                                </div>
+                                        <!--{% if form.efforts.errors %}
+                                            <ol>
+                                            {% for error in form.efforts.errors %}
+                                                <li><strong>{{ error|escape }}</strong></li>
+                                            {% endfor %}
+                                            </ol>
+                                        {% endif %}-->
                                 <!--<div class="form-group">
                                     <label class="col-form-label">Status</label>
                                     <div class="input-group">

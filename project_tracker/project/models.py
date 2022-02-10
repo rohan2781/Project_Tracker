@@ -8,6 +8,7 @@ class Project(models.Model):
     efforts = models.IntegerField()
     dead_line = models.DateField()
     person= models.CharField(max_length=100,default='NULL')
+    developer= models.CharField(max_length=100,default='NULL')
     complete_per = models.FloatField(max_length=2, validators = [MinValueValidator(0), MaxValueValidator(100)])
     description = models.TextField(blank=True)
 

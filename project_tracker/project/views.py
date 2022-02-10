@@ -4,14 +4,23 @@ from django.contrib import messages
 from .models import Project
 from .forms import ProjectRegistrationForm
 from home.models import Client
+from manager.models import Developer
 import datetime as dt
 from datetime import datetime
 # Create your views here.
 
 def project(request,id):
     project=Project.objects.get(pk=id)
+    dev=Developer.objects.all()
+    pro=project.developer.split(',')
+    pro2=[]
+    for i in pro:
+        for j in dev:
+            if i==j.email:
+                pro2.append(j.first_name + ' - ' + j.last_name)
+    dev=pro2
     client=Client.objects.get(email=project.person)
-    return render(request,'project.html',{'project':project,'client':client})
+    return render(request,'project.html',{'project':project,'client':client,'dev':dev})
 
 def projects(request):
     client=Client.objects.all()
@@ -20,10 +29,11 @@ def projects(request):
 
 def newProject(request):
     #if request.user.is_authenticated:
+    dev=Developer.objects.all()
     client=Client.objects.all()
     if request.method == 'POST':
         form = ProjectRegistrationForm(request.POST)
-        context = {'form': form,'client': client}
+        context = {'form': form,'client': client,'dev':dev}
         if form.is_valid():
             dates=request.POST['dead_line']
             dates = datetime.strptime(dates, '%Y-%m-%d')
@@ -35,22 +45,30 @@ def newProject(request):
             if Project.objects.filter(name=name).exists():
                 messages.info(request,'Project With Same Name Already Exists !')
                 return render(request, 'new_project.html', context)
+            l=request.POST.getlist('developer')
+            str=''
+            for i in l:
+                str=str+i+','
+            if len(l)==0:
+                messages.info(request,'Please Select Atleast one Developer !!')
+                return render(request, 'new_project.html', context)
             if request.POST['person']=='Select':
                 messages.info(request,'Please Select A Client !!')
                 return render(request, 'new_project.html', context)
             else:    
                 form.save()
                 Project.objects.filter(name=name).update(person=request.POST['person'])
+                Project.objects.filter(name=name).update(developer=str)
                 created = True
                 form = ProjectRegistrationForm()
-                context = {'created': created,'form': form,'client': client}
+                context = {'created': created,'form': form,'client': client,'dev':dev}
                 return render(request, 'new_project.html', context)
         else:
             messages.info(request,'Date Error In Form')
             return render(request, 'new_project.html', context)
     else:
         form = ProjectRegistrationForm()
-        context = { 'form': form,'client': client}
+        context = { 'form': form,'client': client,'dev':dev}
     return render(request,'new_project.html',context)
 
 
@@ -68,31 +86,40 @@ def remove_project(request,id):
 # for Updating client information
 def update_project(request,id):
     client=Client.objects.all()
+    dev=Developer.objects.all()
     if request.method == 'POST':
         pi = Project.objects.get(pk=id)
         temp=pi.name
         project = ProjectRegistrationForm(request.POST, instance=pi)
         if project.is_valid():
-            
             dates=request.POST['dead_line']
             dates = datetime.strptime(dates, '%Y-%m-%d')
             dates= dates.date()
-            name=request.POST['name']
             if request.POST['name']!=temp:
                     messages.info(request,'Project With Same Name Already Exists !')
             elif dates < dt.date.today():
                 messages.info(request,'Date Must Of Future !')
-
             else:
                 project.save()
                 if request.POST['person']!='set':
                     Project.objects.filter(id=pi.id).update(person=request.POST['person'])
                 messages.info(request,"Updated Succesfully")
+                l=request.POST.getlist('developer')
+                str=''
+                for i in l:
+                    str=str+i+','
+                Project.objects.filter(id=pi.id).update(developer=str)
                 return redirect('/project/projects')
     pi = Project.objects.get(pk=id)
     pro=pi.person
+    pro1=pi.developer
+    pro1=pro1.split(',')
     for i in client:
         if i.email==pro:
             pro=i.first_name + ' - ' + i.last_name
+    for i in pro1:
+        for j in dev:
+            if j.email==i:
+                j.password='set'
     project = ProjectRegistrationForm(instance=pi)
-    return render(request,'update_project.html',{'form':project,'client':client,'pro':pro})
+    return render(request,'update_project.html',{'form':project,'client':client,'pro':pro,'dev':dev})

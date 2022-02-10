@@ -21,11 +21,13 @@
                                 <p class="text-center alert alert-info">{{ message }}</p>
                                 {% endfor %}
                               </div>
-                          <p class="text-left" style='font-size:20px'><b>Register a New Client</b></p><br>
+                          <p class="text-center alert alert-info" style='font-size:20px'><b>Register</b></p><br>
                             <form method="POST" action="">
                                 {% csrf_token %}
                                 {{form.as_p}}
-                                <input type="Submit" class='btn btn-success' name="" value="Save">
+                                <input type="checkbox" id="developer" name="developer" value="1">
+                                <label for="developer"> Developer ? Check This box</label><br><br>
+                                <input type="Submit" class='btn btn-success' name="" value="Register">
                               <!--  <h1>Sign-Up</h1>
                                 <p class="text-muted">Sign In to your account</p>
                                 <div class="input-group mb-3">
@@ -84,20 +86,20 @@
             </div>
         </div>
     </div>
-  <!-- Bootstrap and necessary plugins 
+  <!-- Bootstrap and necessary plugins
     <script src="{% static 'core/vendors/js/jquery.min.js'%}"></script>
     <script src="{% static 'core/vendors/js/popper.min.js'%}"></script>
     <script src="{% static 'core/vendors/js/bootstrap.min.js'%}"></script>
     <script src="{% static 'core/vendors/js/pace.min.js'%}"></script>
     <script src="{% static 'core/vendors/js/Chart.min.js'%}"></script>-->
 
-  <!-- CoreUI main scripts 
+  <!-- CoreUI main scripts
 
     <script src="{% static 'core/js/app.js'%}"></script>-->
 
   <!-- Plugins and scripts required by this views -->
 
-  <!-- Custom scripts required by this view 
+  <!-- Custom scripts required by this view
     <script src="{% static 'core/js/main.js'%}"></script>-->
 
 </body>
