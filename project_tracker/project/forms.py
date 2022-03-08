@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project
+from .models import *
 from home.models import Client
 import datetime
 

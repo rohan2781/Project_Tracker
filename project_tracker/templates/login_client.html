@@ -52,7 +52,7 @@
     {{ i.name }}
     </td>
     <td id='td1' width='70px' align='center'>
-      <a href="{% url 'project' i.id %}"><button id='button'>VIEW</button></a>
+      <a href="{% url 'project' i.id %}"><i class="fa fa-eye" style='cursor: pointer;font-size:20px'></i></a>
     </td>
     </tr>
     {%endfor%}

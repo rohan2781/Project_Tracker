@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from .models import Project
-from .forms import ProjectRegistrationForm
+from .models import *
+from .forms import *
 from home.models import Client
 from manager.models import Developer
 import datetime as dt
@@ -12,6 +12,7 @@ from datetime import datetime
 def project(request,id):
     project=Project.objects.get(pk=id)
     dev=Developer.objects.all()
+    feeds=Comment.objects.filter(p_id=project.id)
     pro=project.developer.split(',')
     pro2=[]
     for i in pro:
@@ -20,7 +21,11 @@ def project(request,id):
                 pro2.append(j.first_name + ' - ' + j.last_name)
     dev=pro2
     client=Client.objects.get(email=project.person)
-    return render(request,'project.html',{'project':project,'client':client,'dev':dev})
+    if request.method == 'POST':
+        feed=request.POST['feed']
+        comments=Comment(feed=feed,p_id=project.id,name=client.first_name+' '+client.last_name)
+        comments.save()
+    return render(request,'project.html',{'project':project,'client':client,'dev':dev,'feeds':feeds})
 
 def projects(request):
     client=Client.objects.all()

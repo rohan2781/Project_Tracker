@@ -8,6 +8,18 @@
 <li class="breadcrumb-item">Projects</li>
 {% endblock breadcrumb%}
 {% block content %}
+<style>
+    .feed {
+        padding: 10px; 
+        width:95%;
+      }
+      .textarea{
+        border-radius: 25px;
+        border: 2px solid #73AD21;
+        padding: 10px; 
+        width:85%;
+      }
+</style>
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
@@ -78,5 +90,31 @@
                 <canvas id="sparkline-chart-3" width="86" height="25" class="chartjs-render-monitor" style="display: block; width: 86px; height: 25px;"></canvas>
         </div>
     </div>
+    <div style='padding:30px'></div>
+    <div class="callout callout-light">
+        <strong class="h3">Comments : </strong>
+        <div class="chart-wrapper"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+            <canvas id="sparkline-chart-3" width="86" height="25" class="chartjs-render-monitor" style="display: block; width: 86px; height: 25px;"></canvas>
+    </div><br><br>
+    <div>
+        {% for i in feeds %}
+        <div>
+        <div class="callout callout-light">
+            <strong class="h5"><i class="fa fa-user"></i> {{i.name}} </strong>
+            <div class="chart-wrapper"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
+                <canvas id="sparkline-chart-3" width="86" height="25" class="chartjs-render-monitor" style="display: block; width: 86px; height: 25px;"></canvas>
+        </div>
+        <div class="callout callout-light">
+            {{i.feed}}<br>
+            <a href='#'><strong class="h6"><i class="fa fa-reply">&nbsp</i></strong></a>&nbsp&nbsp
+            <a href='#'><strong class="h6"><i class="fa fa-trash"> </i></strong></a>
+
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+    <form method="POST" action="">{% csrf_token %}<div class='feed'><input type='textarea' autocomplete="off" name ='feed' class='textarea'  placeholder='Add Comments Here....' required><!--<i class="fa fa-paper-plane ml-2" style='cursor: pointer;font-size:20px'></i>--><input type='submit' value='submit'></div></form>
+    <!--<i class="fa fa-paper-plane ml-2" style='cursor: pointer;font-size:20px'></i>
+    <input style="font-family: FontAwesome" value="&#xf002;" type="submit">-->
 </div>
 {% endblock %}

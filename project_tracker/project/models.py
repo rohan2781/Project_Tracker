@@ -4,7 +4,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from home.models import Client
 
 class Project(models.Model):
-    name = models.CharField(max_length=80)
+    name = models.CharField(max_length=80,default='NULL')
     efforts = models.IntegerField()
     dead_line = models.DateField()
     person= models.CharField(max_length=100,default='NULL')
@@ -14,3 +14,16 @@ class Project(models.Model):
 
     def __str__(self):
         return (self.name)
+
+
+class Comment(models.Model):
+    name=models.CharField(max_length=20,default='NULL')
+    p_id=models.IntegerField()
+    feed = models.TextField(blank=False)
+    
+
+
+class Reply(models.Model):
+    name=models.CharField(max_length=20,default='NULL')
+    c_id=models.IntegerField()
+    feed = models.TextField(blank=False)
