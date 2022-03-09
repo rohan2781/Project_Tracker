@@ -7,6 +7,7 @@ from home.models import Client
 from manager.models import Developer
 import datetime as dt
 from datetime import datetime
+from django.contrib.auth.models import User, auth
 # Create your views here.
 
 def project(request,id):
@@ -20,7 +21,7 @@ def project(request,id):
             if i==j.email:
                 pro2.append(j.first_name + ' - ' + j.last_name)
     dev=pro2
-    client=Client.objects.get(email=project.person)
+    client=User.objects.get(email=project.person)
     if request.method == 'POST':
         feed=request.POST['feed']
         comments=Comment(feed=feed,p_id=project.id,name=client.first_name+' '+client.last_name)
@@ -28,14 +29,14 @@ def project(request,id):
     return render(request,'project.html',{'project':project,'client':client,'dev':dev,'feeds':feeds})
 
 def projects(request):
-    client=Client.objects.all()
+    client=User.objects.all()
     project=Project.objects.all()
     return render(request,'projects.html',{'project':project,'client':client})
 
 def newProject(request):
     #if request.user.is_authenticated:
     dev=Developer.objects.all()
-    client=Client.objects.all()
+    client=User.objects.all()
     if request.method == 'POST':
         form = ProjectRegistrationForm(request.POST)
         context = {'form': form,'client': client,'dev':dev}
@@ -60,7 +61,7 @@ def newProject(request):
             if request.POST['person']=='Select':
                 messages.info(request,'Please Select A Client !!')
                 return render(request, 'new_project.html', context)
-            else:    
+            else:
                 form.save()
                 Project.objects.filter(name=name).update(person=request.POST['person'])
                 Project.objects.filter(name=name).update(developer=str)
@@ -90,7 +91,7 @@ def remove_project(request,id):
 
 # for Updating client information
 def update_project(request,id):
-    client=Client.objects.all()
+    client=User.objects.all()
     dev=Developer.objects.all()
     if request.method == 'POST':
         pi = Project.objects.get(pk=id)

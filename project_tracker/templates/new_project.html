@@ -92,7 +92,7 @@
                                         <option>Select</option>
                                         {% for i in client %}
                                         {% if i.last_name != 'Admin'%}
-                                        <option value="{{ i.email}}">{{ i.first_name}} - {{i.last_name}}</option>
+                                        <option value="{{ i.email}}">{{ i.username}} - {{i.last_name}}</option>
                                         {% endif %}
                                         {% endfor %}
                                         </select>
@@ -113,7 +113,7 @@
                                             <span class="input-group-text"><i class="fa fa-users"></i></span>
                                         </div>
                                         <table border=0 cellpadding=3 cellspacing=3>
-                                        
+
                                         {% for i in dev %}
                                         <tr>
                                         <td>
@@ -124,7 +124,7 @@
                                         </td>
                                          </tr>
                                         {% endfor %}
-                                      
+
                                         </table>
                                         <!--{% if form.efforts.errors %}
                                             <ol>

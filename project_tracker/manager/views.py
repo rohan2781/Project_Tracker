@@ -5,14 +5,14 @@ from home.models import Client
 from .models import Developer
 from home.forms import ClientRegistration
 from django.contrib import messages
-
+from django.contrib.auth.models import User, auth
 
 def manager(request):
-        data = Client.objects.all()
+        data = User.objects.all()
         return render(request,'admin.html',{'data':data})
 # Create your views here.
 def admin_client(request):
-    client = Client.objects.all()
+    client = User.objects.all()
     return render(request,'client.html',{'client':client})
 
 def developer(request):

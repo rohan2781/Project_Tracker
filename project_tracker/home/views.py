@@ -5,6 +5,9 @@ from project.models import Project
 from .forms import ClientRegistration
 from .models import Client
 from manager.models import Developer
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate,login,logout
+
 
 def index(request):
     return render (request,'index.html')
@@ -16,13 +19,12 @@ def logins(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        if Client.objects.filter(email=email,password=password).exists():
-            if email=='rohan@gmail.com':
+        if User.objects.filter(email=email,password=password).exists():
+            if email=='admin@gmail.com':
                 return redirect('/manager')
             else:
-                client=Client.objects.get(email=email)
+                client=User.objects.get(email=email)
                 return redirect('/account/'+str(client.id))
-
         else:
             messages.info(request,"Invalid Credentials")
 
@@ -30,7 +32,7 @@ def logins(request):
 
 
 def client(request,id):
-    client=Client.objects.get(pk=id)
+    client=User.objects.get(pk=id)
     project=Project.objects.filter(person=client.email)
     return render(request,'login_client.html',{'project':project,'client':client})
 
@@ -42,7 +44,7 @@ def SignUp(request):
         client = ClientRegistration(request.POST)
 #        id = request.POST['id']
         if client.is_valid():
-            first_name = client.cleaned_data['first_name']
+            username = client.cleaned_data['username']
             last_name = client.cleaned_data['last_name']
             email = client.cleaned_data['email']
             password = client.cleaned_data['password']
@@ -50,15 +52,15 @@ def SignUp(request):
                 if Developer.objects.filter(email=email).exists():
                     messages.info(request,"Email already taken")
                 else:
-                    reg = Developer(first_name=first_name, last_name=last_name, email=email, password=password)
+                    reg = Developer(username=username, last_name=last_name, email=email, password=password)
                     reg.save()
                     messages.info(request,'Developer Added Successfully')
                     return redirect('/sign-up/')
             else:
-                if Client.objects.filter(email=email).exists():
+                if User.objects.filter(email=email).exists():
                     messages.info(request,"Email already exists")
                 else:
-                    reg = Client(first_name=first_name, last_name=last_name, email=email, password=password)
+                    reg = User.objects.create(username=username, last_name=last_name, email=email, password=password)
                     reg.save()
                     messages.info(request,'Client Added Successfully')
                     return redirect('/sign-up/')
@@ -88,7 +90,7 @@ def SignUp(request):
 # For removing Client
 def remove_client(request,id):
     if request.method == "POST":
-        pi = Client.objects.get(pk=id)
+        pi = User.objects.get(pk=id)
         project=Project.objects.filter(person=pi.email)
         pi.delete()
         for i in project:
@@ -96,14 +98,14 @@ def remove_client(request,id):
         messages.info(request,"Deleted Successfully")
         return redirect('/manager/client')
     else:
-        pi=Client.objects.get(pk=id)
-    client = Client.objects.get(pk=id)
+        pi=User.objects.get(pk=id)
+    client = User.objects.get(pk=id)
     return render(request,'remove_client.html',{'client':client})
 
 # for Updating client information
 def update_client(request,id):
     if request.method == 'POST':
-        pi = Client.objects.get(pk=id)
+        pi = User.objects.get(pk=id)
         temp=pi.email
         client = ClientRegistration(request.POST, instance=pi)
         if client.is_valid():
@@ -113,7 +115,7 @@ def update_client(request,id):
                 return redirect('/manager/client')
             else:
                 messages.info(request,"Can't Change Email")
-    pi = Client.objects.get(pk=id)
+    pi = User.objects.get(pk=id)
     client = ClientRegistration(instance=pi)
     return render(request,'update_client.html',{'form':client})
 
