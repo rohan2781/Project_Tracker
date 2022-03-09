@@ -1,13 +1,24 @@
 {% extends 'base1.html' %}
 {% load static %}
 {% block greeting %}
-<li class="text-muted">Client {{ client.first_name }}</li>
+<li class="text-muted">Client {{ client.username }}</li>
 {% endblock %}
 {% block breadcrumb %}
 <li class="breadcrumb-item">Home</li>
 <li class="breadcrumb-item">Projects</li>
 {% endblock breadcrumb%}
 {% block content %}
+<script>
+    function repli(id)
+    {
+        var x = document.getElementById(id);
+        if (x.style.display === 'none') {
+        x.style.display = 'block';
+        } else {
+        x.style.display = 'none';
+        }
+    }
+</script>
 <style>
     .feed {
         padding: 10px; 
@@ -19,6 +30,12 @@
         padding: 10px; 
         width:85%;
       }
+      .textarea1{
+        border-radius: 25px;
+        border: 2px solid #73AD21;
+        padding: 5px; 
+        width:25%;
+      }
 </style>
 <div class="col-md-12">
     <div class="card">
@@ -28,7 +45,7 @@
         <div class="callout callout-light">
             <small class="text-muted">Client</small>
             <br>
-            <strong class="h4">{{ client.first_name }}  {{ client.last_name }}</strong>
+            <strong class="h4">{{ client.username }}  {{ client.last_name }}</strong>
             <div class="chart-wrapper"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                 <canvas id="sparkline-chart-3" width="86" height="25" class="chartjs-render-monitor" style="display: block; width: 86px; height: 25px;"></canvas>
         </div>
@@ -106,14 +123,14 @@
         </div>
         <div class="callout callout-light">
             {{i.feed}}<br>
-            <a href='#'><strong class="h6"><i class="fa fa-reply">&nbsp</i></strong></a>&nbsp&nbsp
+            <a href='#' onclick="return repli({{i.id}})"><strong class="h6"><i class="fa fa-reply">&nbsp</i></strong></a>&nbsp&nbsp
             <a href='#'><strong class="h6"><i class="fa fa-trash"> </i></strong></a>
-
+            <form method="POST" action="" id="{{i.id}}" name="{{i.id}}" style='display:none'>{% csrf_token %}<div class='feed'><input type='textarea' autocomplete="off" name ='feed' id='feed' class='textarea1'  placeholder='Reply... ' required><!--<i class="fa fa-paper-plane ml-2" style='cursor: pointer;font-size:20px'></i>--><input type='submit' id ='sub' name='sub' value='Reply'></div></form>
         </div>
         </div>
         {% endfor %}
     </div>
-    <form method="POST" action="">{% csrf_token %}<div class='feed'><input type='textarea' autocomplete="off" name ='feed' class='textarea'  placeholder='Add Comments Here....' required><!--<i class="fa fa-paper-plane ml-2" style='cursor: pointer;font-size:20px'></i>--><input type='submit' value='submit'></div></form>
+    <form method="POST" action="">{% csrf_token %}<div class='feed'><input type='textarea' autocomplete="off" name ='feed' id='feed' class='textarea'  placeholder='Add Comments Here....' required><!--<i class="fa fa-paper-plane ml-2" style='cursor: pointer;font-size:20px'></i>--><input type='submit' id ='sub' name='sub' value='Submit'></div></form>
     <!--<i class="fa fa-paper-plane ml-2" style='cursor: pointer;font-size:20px'></i>
     <input style="font-family: FontAwesome" value="&#xf002;" type="submit">-->
 </div>

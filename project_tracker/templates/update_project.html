@@ -21,8 +21,8 @@
                                 <select name='person'>
                                   <option value='set'>{{pro}}</option>
                                   {% for i in client %}
-                                  {% if i.last_name != 'Admin' and i.first_name|add:' - '|add:i.last_name != pro %}
-                                  <option value="{{ i.email}}">{{ i.first_name}} - {{i.last_name}}</option>
+                                  {% if i.last_name != 'Admin' and i.username|add:' - '|add:i.last_name != pro %}
+                                  <option value="{{ i.email}}">{{ i.username}} - {{i.last_name}}</option>
                                   {% endif %}
                                   {% endfor %}
                                   </select><br><br>
