@@ -14,10 +14,22 @@
         var x = document.getElementById(id);
         if (x.style.display === 'none') {
         x.style.display = 'block';
+        num=id;
+        num=num.toString();
+        num='feed'+num;
+        document.getElementById(num).focus();
         } else {
         x.style.display = 'none';
         }
     }
+    function subs(id)
+    {
+        num=id;
+        num=num.toString();
+        num='f'+num;
+        document.getElementById(num).value=id;
+    }
+
 </script>
 <style>
     .feed {
@@ -114,6 +126,7 @@
             <canvas id="sparkline-chart-3" width="86" height="25" class="chartjs-render-monitor" style="display: block; width: 86px; height: 25px;"></canvas>
     </div><br><br>
     <div>
+        <p name='cid' value='1'></p>
         {% for i in feeds %}
         <div>
         <div class="callout callout-light">
@@ -125,8 +138,27 @@
             {{i.feed}}<br>
             <a href='#' onclick="return repli({{i.id}})"><strong class="h6"><i class="fa fa-reply">&nbsp</i></strong></a>&nbsp&nbsp
             <a href='#'><strong class="h6"><i class="fa fa-trash"> </i></strong></a>
-            <form method="POST" action="" id="{{i.id}}" name="{{i.id}}" style='display:none'>{% csrf_token %}<div class='feed'><input type='textarea' autocomplete="off" name ='feed' id='feed' class='textarea1'  placeholder='Reply... ' required><!--<i class="fa fa-paper-plane ml-2" style='cursor: pointer;font-size:20px'></i>--><input type='submit' id ='sub' name='sub' value='Reply'></div></form>
+            <form method="POST" action="" id="{{i.id}}" name="{{i.id}}" style='display:none'>{% csrf_token %}<div class='feed'><input type='text' id="f{{i.id}}" name="f{{i.id}}" style='display:none'></input><input type='textarea' autocomplete="off" name ="feed{{i.id}}" id="feed{{i.id}}" class='textarea1'  placeholder='Reply... ' required><!--<i class="fa fa-paper-plane ml-2" style='cursor: pointer;font-size:20px'></i>--><input type='submit' id ="sub" name="sub" onclick="return subs({{i.id}})" value="Reply"></div></form>
         </div>
+
+        <div style='padding-left:30px'>
+            {% for j in repli %}
+            {% if j.c_id == i.id %}
+        <div>
+        <div class="callout callout-light">
+            <strong class="h5"><i class="fa fa-user"></i> {{j.name}} </strong>
+        </div>
+        <div class="callout callout-light">
+            {{j.feed}}<br>
+            <!--<a href='#' onclick="return repli({{i.id}})"><strong class="h6"><i class="fa fa-reply">&nbsp</i></strong></a>&nbsp&nbsp
+            <a href='#'><strong class="h6"><i class="fa fa-trash"> </i></strong></a>
+            <form method="POST" action="" id="{{i.id}}" name="{{i.id}}" style='display:none'>{% csrf_token %}<div class='feed'><input type='text' id="f{{i.id}}" name="f{{i.id}}" style='display:none'></input><input type='textarea' autocomplete="off" name ="feed{{i.id}}" id="feed{{i.id}}" class='textarea1'  placeholder='Reply... ' required><i class="fa fa-paper-plane ml-2" style='cursor: pointer;font-size:20px'></i><input type='submit' id ="sub" name="sub" onclick="return subs({{i.id}})" value="Reply"></div></form>-->
+        </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        </div>
+
         </div>
         {% endfor %}
     </div>

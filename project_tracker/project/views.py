@@ -15,6 +15,7 @@ def project(request,id):
         project=Project.objects.get(pk=id)
         dev=Developer.objects.all()
         feeds=Comment.objects.filter(p_id=project.id)
+        repli=Reply.objects.all()
         pro=project.developer.split(',')
         pro2=[]
         for i in pro:
@@ -26,14 +27,29 @@ def project(request,id):
         if request.method == 'POST':
             if request.POST['sub']=='Submit':
                 feed=request.POST['feed']
-                comments=Comment(feed=feed,p_id=project.id,name=client.username+' '+client.last_name)
+                first=request.user.username
+                last=request.user.last_name
+                if(first=='admin'):
+                    comments=Comment(feed=feed,p_id=project.id,name='Admin')
+                else:
+                    comments=Comment(feed=feed,p_id=project.id,name=first+' '+last)
                 comments.save()
-            '''elif request.POST['sub']=='Reply':
-                #return HttpResponse(request.POST['cid'])
-                feed=request.POST['feed']
-                #replys=Reply(feed=feed,p_id=c.id,name=client.username+' '+client.last_name)
-                #replys.save()'''
-        return render(request,'project.html',{'project':project,'client':client,'dev':dev,'feeds':feeds})
+            elif request.POST['sub']=='Reply':
+                l=''
+                m=''
+                for i in feeds:
+                    l+=request.POST.get('feed'+str(i.id),' ')
+                    m+=request.POST.get('f'+str(i.id),' ')
+                feed=l.strip()
+                c_id=m.strip()
+                first=request.user.username
+                last=request.user.last_name
+                if(first=='admin'):
+                    replys=Reply(feed=feed,c_id=c_id,name='Admin')
+                else:
+                    replys=Reply(feed=feed,c_id=c_id,name=first+' '+last)
+                replys.save()
+        return render(request,'project.html',{'project':project,'client':client,'dev':dev,'feeds':feeds,'repli':repli})
     else:
         return redirect('/login')
 
