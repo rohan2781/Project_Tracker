@@ -8,6 +8,8 @@ from manager.models import Developer
 import datetime as dt
 from datetime import datetime
 from django.contrib.auth.models import User, auth
+from django.core.mail import EmailMessage
+
 # Create your views here.
 
 def project(request,id):
@@ -90,6 +92,48 @@ def newProject(request):
                     messages.info(request,'Please Select A Client !!')
                     return render(request, 'new_project.html', context)
                 else:
+                    name = request.POST['name']
+                    budget = request.POST['efforts']
+                    dead_line = request.POST['dead_line']
+                    developer = request.POST['developer']
+                    complete_per = request.POST['complete_per']
+                    description = request.POST['description']
+                    temp = request.POST['person']  #client email
+                    email = EmailMessage(
+                    'Project registered!',
+                    '''Your project is registered Successfully.
+
+Project related information is,
+
+Name: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s''' % (
+    name,
+    budget,
+    l,
+    dead_line,
+    complete_per,
+),
+                    'noreply@semycolon.com',
+                    [temp],
+                    )
+                    email.send(fail_silently = False)
+                    for i in l:
+                        email = EmailMessage(
+'Project Assigned!',
+'''You are assigned with project work.
+
+Project related information is,
+
+Name: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s''' % (
+    name,
+    temp,
+    dead_line,
+    complete_per,
+    description,
+),
+                    'noreply@semycolon.com',
+                    [i],
+                    )
+                    email.send(fail_silently = False)
                     form.save()
                     Project.objects.filter(name=name).update(person=request.POST['person'])
                     Project.objects.filter(name=name).update(developer=str)
@@ -112,6 +156,52 @@ def remove_project(request,id):
     if request.user.is_authenticated:
         if request.method == "POST":
             pi = Project.objects.get(pk=id)
+            name = pi.name
+            budget = pi.efforts
+            dead_line = pi.dead_line
+            complete_per = pi.complete_per
+            description = pi.description
+            temp = pi.person
+            l=request.POST.getlist('developer')
+            str=''
+            for i in l:
+                str=str+i+','
+            developer = pi.developer
+            email = EmailMessage(
+            'Project Deleted!',
+            '''Your project is succesfully deleted.
+
+Project related information is,
+
+Name: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s''' % (
+    name,
+    budget,
+    l,
+    dead_line,
+    complete_per,
+),
+            'noreply@semycolon.com',
+            [temp],
+            )
+            email.send(fail_silently = False)
+            for i in l:
+                email = EmailMessage(
+'Project Removed!',
+'''Project is removed from development.
+
+Project related information is,
+
+Name: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s''' % (
+    name,
+    temp,
+    dead_line,
+    complete_per,
+    description,
+),
+            'noreply@semycolon.com',
+            [i],
+            )
+            email.send(fail_silently = False)
             pi.delete()
             messages.info(request,"Deleted Successfully")
             return redirect('/project/projects')
@@ -129,17 +219,65 @@ def update_project(request,id):
         dev=Developer.objects.all()
         if request.method == 'POST':
             pi = Project.objects.get(pk=id)
-            temp=pi.name
+            temp = pi.name
+            temp = pi.person
+            l=request.POST.getlist('developer')
+            str=''
+            for i in l:
+                str=str+i+','
             project = ProjectRegistrationForm(request.POST, instance=pi)
             if project.is_valid():
                 dates=request.POST['dead_line']
                 dates = datetime.strptime(dates, '%Y-%m-%d')
                 dates= dates.date()
-                if request.POST['name']!=temp:
-                        messages.info(request,'Project With Same Name Already Exists !')
-                elif dates < dt.date.today():
+#                if request.POST['name']!=temp:
+#                        messages.info(request,'Project With Same Name Already Exists !')
+                if dates < dt.date.today():
                     messages.info(request,'Date Must Of Future !')
                 else:
+                    name = request.POST['name']
+                    budget = request.POST['efforts']
+                    dead_line = request.POST['dead_line']
+                    developer = request.POST['developer']
+                    complete_per = request.POST['complete_per']
+                    description = request.POST['description']
+                    email = EmailMessage(
+                    'Project Updated!',
+                    '''Your project details are updated.
+
+Project related information is,
+
+Name: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s''' % (
+    name,
+    budget,
+    l,
+    dead_line,
+    complete_per,
+),
+                    'noreply@semycolon.com',
+                    [temp],
+                    )
+                    email.send(fail_silently = False)
+                    for i in l:
+                        str=str+i+','
+                    for i in l:
+                        email = EmailMessage(
+'Project Assigned!',
+'''You are assigned with project work.
+
+Project related information is,
+
+Name: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s''' % (
+    name,
+    temp,
+    dead_line,
+    complete_per,
+    description,
+),
+                    'noreply@semycolon.com',
+                    [i],
+                    )
+                    email.send(fail_silently = False)
                     project.save()
                     if request.POST['person']!='set':
                         Project.objects.filter(id=pi.id).update(person=request.POST['person'])

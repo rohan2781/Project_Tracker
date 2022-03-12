@@ -7,7 +7,7 @@ from .models import Client
 from manager.models import Developer
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
-
+from django.core.mail import EmailMessage
 
 def index(request):
     if not request.user.is_authenticated:
@@ -72,6 +72,16 @@ def SignUp(request):
                         messages.info(request,"Email already taken")
                     else:
                         reg = Developer(first_name=username, last_name=last_name, email=email, password=password)
+                        reg.is_activate=False
+                        email_subject = 'Position Assigned!'
+                        email_body="Congrats!! You are now registered as a Django developer with PTS."
+                        email = EmailMessage(
+                        email_subject,
+                        email_body,
+                        'noreply@semycolon.com',
+                        [email],
+                        )
+                        email.send(fail_silently = False)
                         reg.save()
                         messages.info(request,'Developer Added Successfully')
                         return redirect('/sign-up/')
@@ -82,6 +92,21 @@ def SignUp(request):
                         messages.info(request,"Please Use Different Username")
                     else:
                         reg = User.objects.create(username=username, last_name=last_name, email=email, password=password)
+                        email_subject = 'Account Registered!'
+                        email_body = '''Thank you!! for regestering with PTS.
+
+Your login credentials are,
+email: %s\npassword: %s''' % (
+        email,
+        password,
+    )
+                        email = EmailMessage(
+                        email_subject,
+                        email_body,
+                        'noreply@semycolon.com',
+                        [email],
+                        )
+                        email.send(fail_silently = False)
                         reg.save()
                         messages.info(request,'Client Added Successfully')
                         return redirect('/sign-up/')
@@ -97,7 +122,18 @@ def remove_client(request,id):
     if request.user.is_authenticated:
         if request.method == "POST":
             pi = User.objects.get(pk=id)
+            temp = pi.email
             project=Project.objects.filter(person=pi.email)
+            email_subject = 'Account removed Successfully'
+            email_body='''Your account has been deleted.
+Sorry for inconvinencies you experienced with PTS, we are trying to improve. '''
+            email = EmailMessage(
+            email_subject,
+            email_body,
+            'noreply@semycolon.com',
+            [temp],
+            )
+            email.send(fail_silently = False)
             pi.delete()
             for i in project:
                 i.delete()
@@ -119,6 +155,24 @@ def update_client(request,id):
             client = ClientRegistration(request.POST, instance=pi)
             if client.is_valid():
                 if request.POST['email']==temp:
+                    username = client.cleaned_data['username']
+                    last_name = client.cleaned_data['last_name']
+                    password = client.cleaned_data['password']
+                    email_subject = 'Account information updated!'
+                    email_body='''Your account information has been updated.
+
+Your updated login credentials are,
+email: %s\npassword: %s''' % (
+    temp,
+    password,
+)
+                    email = EmailMessage(
+                    email_subject,
+                    email_body,
+                    'noreply@semycolon.com',
+                    [temp],
+                    )
+                    email.send(fail_silently = False)
                     client.save()
                     messages.info(request,"Updated Succesfully")
                     return redirect('/manager/client')
