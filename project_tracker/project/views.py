@@ -15,6 +15,9 @@ from django.core.mail import EmailMessage
 def project(request,id):
     if request.user.is_authenticated:
         project=Project.objects.get(pk=id)
+        admin_mail = 'ptssystemcommercial@gmail.com'
+        temp = project.person
+        name = project.name
         dev=Developer.objects.all()
         feeds=Comment.objects.filter(p_id=project.id)
         repli=Reply.objects.all()
@@ -32,11 +35,74 @@ def project(request,id):
                 first=request.user.username
                 last=request.user.last_name
                 if(first=='admin'):
+                    email = EmailMessage(
+                    'Comment Posted!',
+                    '''You posted comment on the project,
+
+Project Name: '%s'
+Project Client: '%s'
+Comment: '%s' ''' % (
+    name,
+    temp,
+    feed,
+),
+                    'noreply@semycolon.com',
+                    [admin_mail],
+                    )
+                    email.send(fail_silently = False)
+
+                    email = EmailMessage(
+                    'Comment received!',
+                    '''Admin posted comment on your project,
+
+Project Name: '%s'
+Comment: '%s' ''' % (
+    name,
+    feed,
+),
+                    'noreply@semycolon.com',
+                    [temp],
+                    )
+                    email.send(fail_silently = False)
                     comments=Comment(feed=feed,p_id=project.id,name='Admin')
                 else:
+                    email = EmailMessage(
+                    'Comment received!',
+                    '''Client has posted comment on their project,
+
+Project Name: '%s'
+Project Client: '%s'
+Comment: '%s' ''' % (
+    name,
+    temp,
+    feed,
+),
+                    'noreply@semycolon.com',
+                    [admin_mail],
+                    )
+                    email.send(fail_silently = False)
+                    email = EmailMessage(
+                    'Comment Posted!',
+                    '''You posted comment on the project,
+
+Project Name: '%s'
+Comment: '%s' ''' % (
+    name,
+    feed,
+),
+                    'noreply@semycolon.com',
+                    [temp],
+                    )
+                    email.send(fail_silently = False)
                     comments=Comment(feed=feed,p_id=project.id,name=first+' '+last)
                 comments.save()
             elif request.POST['sub']=='Reply':
+
+
+       # MAIL COMMENT
+
+#                comment = Comment.objects.get(pk=id)
+#                comm = comment.feed
                 l=''
                 m=''
                 for i in feeds:
@@ -47,8 +113,72 @@ def project(request,id):
                 first=request.user.username
                 last=request.user.last_name
                 if(first=='admin'):
+                    email = EmailMessage(
+                    'Reply posted!',
+                    '''You posted reply to the comment on project,
+
+Project Name: '%s'
+Project Client: '%s'
+Reply: '%s' ''' % (
+    name,
+    temp,
+#    comm,
+    feed,
+),
+                    'noreply@semycolon.com',
+                    [admin_mail],
+                    )
+                    email.send(fail_silently = False)
+
+                    email = EmailMessage(
+                    'Reply received!',
+                    '''Admin replied to the comment on your project ,
+
+Project Name: '%s'
+Reply: '%s' ''' % (
+    name,
+#    comm,
+    feed,
+),
+                    'noreply@semycolon.com',
+                    [temp],
+                    )
+                    email.send(fail_silently = False)
                     replys=Reply(feed=feed,c_id=c_id,name='Admin')
                 else:
+                    email = EmailMessage(
+                    'Reply received!',
+                    '''Client has replied to the comment of their project,
+
+Project Name: '%s'
+Project Client: '%s'
+Reply: %s ''' % (
+    name,
+    temp,
+#    comm,
+    feed,
+),
+                    'noreply@semycolon.com',
+                    [admin_mail],
+                    )
+                    email.send(fail_silently = False)
+                    email = EmailMessage(
+                    'Reply Posted!',
+                    '''You replied to the comment on your project,
+
+Project Name: '%s'
+Reply: '%s' ''' % (
+    name,
+#    comm,
+    feed,
+),
+                    'noreply@semycolon.com',
+                    [temp],
+                    )
+                    email.send(fail_silently = False)
+
+
+
                     replys=Reply(feed=feed,c_id=c_id,name=first+' '+last)
                 replys.save()
         return render(request,'project.html',{'project':project,'client':client,'dev':dev,'feeds':feeds,'repli':repli})
