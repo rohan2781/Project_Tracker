@@ -97,12 +97,6 @@ Comment: '%s' ''' % (
                     comments=Comment(feed=feed,p_id=project.id,name=first+' '+last)
                 comments.save()
             elif request.POST['sub']=='Reply':
-
-
-       # MAIL COMMENT
-
-#                comment = Comment.objects.get(pk=id)
-#                comm = comment.feed
                 l=''
                 m=''
                 for i in feeds:
@@ -110,6 +104,8 @@ Comment: '%s' ''' % (
                     m+=request.POST.get('f'+str(i.id),' ')
                 feed=l.strip()
                 c_id=m.strip()
+                cm=Comment.objects.get(id=c_id)
+                comm=cm.feed
                 first=request.user.username
                 last=request.user.last_name
                 if(first=='admin'):
@@ -119,10 +115,11 @@ Comment: '%s' ''' % (
 
 Project Name: '%s'
 Project Client: '%s'
+Comment: '%s'
 Reply: '%s' ''' % (
     name,
     temp,
-#    comm,
+    comm,
     feed,
 ),
                     'noreply@semycolon.com',
@@ -135,9 +132,10 @@ Reply: '%s' ''' % (
                     '''Admin replied to the comment on your project ,
 
 Project Name: '%s'
+Comment: '%s'
 Reply: '%s' ''' % (
     name,
-#    comm,
+    comm,
     feed,
 ),
                     'noreply@semycolon.com',
@@ -152,10 +150,11 @@ Reply: '%s' ''' % (
 
 Project Name: '%s'
 Project Client: '%s'
+Comment: '%s'
 Reply: %s ''' % (
     name,
     temp,
-#    comm,
+    comm,
     feed,
 ),
                     'noreply@semycolon.com',
@@ -167,9 +166,10 @@ Reply: %s ''' % (
                     '''You replied to the comment on your project,
 
 Project Name: '%s'
+Comment: '%s'
 Reply: '%s' ''' % (
     name,
-#    comm,
+    comm,
     feed,
 ),
                     'noreply@semycolon.com',
@@ -292,11 +292,8 @@ def remove_project(request,id):
             complete_per = pi.complete_per
             description = pi.description
             temp = pi.person
-            l=request.POST.getlist('developer')
-            str=''
-            for i in l:
-                str=str+i+','
-            developer = pi.developer
+            l=pi.developer
+            l=l.split(',')
             email = EmailMessage(
             'Project Deleted!',
             '''Your project is succesfully deleted.
@@ -331,7 +328,7 @@ Name: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Descripti
             'noreply@semycolon.com',
             [i],
             )
-            email.send(fail_silently = False)
+                email.send(fail_silently = False)
             pi.delete()
             messages.info(request,"Deleted Successfully")
             return redirect('/project/projects')
