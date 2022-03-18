@@ -8,6 +8,7 @@ from manager.models import Developer
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.core.mail import EmailMessage
+import uuid
 
 def index(request):
     if not request.user.is_authenticated:
@@ -26,11 +27,15 @@ def logins(request):
             password = request.POST['password']
             if User.objects.filter(email=email).exists():
                 value=User.objects.get(email=email)
+                client=User.objects.get(email=email)
                 username=value.username
                 user = authenticate(request, username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    return redirect('/manager')
+                    if email == "admin@gmail.com":
+                        return redirect('/manager')
+                    else:
+                        return redirect('/account/'+str(client.id))
                 #if email=='admin@gmail.com':
                     #   return redirect('/manager')
                 else:
@@ -52,7 +57,6 @@ def client(request,id):
         return render(request,'login_client.html',{'project':project,'client':client})
     else:
         return redirect('/login')
-
 
 # For adding client
 def SignUp(request):
@@ -92,17 +96,9 @@ def SignUp(request):
                         messages.info(request,"Please Use Different Username")
                     else:
                         reg = User.objects.create(username=username, last_name=last_name, email=email, password=password)
-                        email_subject = 'Account Registered!'
-                        email_body = '''Thank you!! for regestering with PTS.
-
-Your login credentials are,
-email: %s\npassword: %s''' % (
-        email,
-        password,
-    )
                         email = EmailMessage(
-                        email_subject,
-                        email_body,
+                        'Account Registered!',
+                        'Thank you!! for regestering with PTS.\nYour login credentials are,\nemail: %s\npassword: %s' % (email,password,),
                         'noreply@semycolon.com',
                         [email],
                         )
@@ -124,12 +120,9 @@ def remove_client(request,id):
             pi = User.objects.get(pk=id)
             temp = pi.email
             project=Project.objects.filter(person=pi.email)
-            email_subject = 'Account removed Successfully'
-            email_body='''Your account has been deleted.
-Sorry for inconvinencies you experienced with PTS, we are trying to improve. '''
             email = EmailMessage(
-            email_subject,
-            email_body,
+            'Account removed Successfully',
+            'Your account has been deleted.\n\nSorry for inconvinencies you experienced with PTS, we are trying to improve. ',
             'noreply@semycolon.com',
             [temp],
             )
@@ -158,17 +151,9 @@ def update_client(request,id):
                     username = client.cleaned_data['username']
                     last_name = client.cleaned_data['last_name']
                     password = client.cleaned_data['password']
-                    email_subject = 'Account information updated!'
-                    email_body='''Your account information has been updated.
-
-Your updated login credentials are,
-email: %s\npassword: %s''' % (
-    temp,
-    password,
-)
                     email = EmailMessage(
-                    email_subject,
-                    email_body,
+                    'Account information updated!',
+                    'Your account information has been updated.\n\nYour updated login credentials are,\nemail: %s\npassword: %s' % (temp,password,),
                     'noreply@semycolon.com',
                     [temp],
                     )

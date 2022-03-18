@@ -36,30 +36,8 @@ def project(request,id):
                 last=request.user.last_name
                 if(first=='admin'):
                     email = EmailMessage(
-                    'Comment Posted!',
-                    '''You posted comment on the project,
-
-Project Name: '%s'
-Project Client: '%s'
-Comment: '%s' ''' % (
-    name,
-    temp,
-    feed,
-),
-                    'noreply@semycolon.com',
-                    [admin_mail],
-                    )
-                    email.send(fail_silently = False)
-
-                    email = EmailMessage(
-                    'Comment received!',
-                    '''Admin posted comment on your project,
-
-Project Name: '%s'
-Comment: '%s' ''' % (
-    name,
-    feed,
-),
+                    'Comment Received!',
+                    'Admin posted comment on your project,\n\nProject Name: %s\nComment: %s ' % (name,feed,),
                     'noreply@semycolon.com',
                     [temp],
                     )
@@ -67,31 +45,10 @@ Comment: '%s' ''' % (
                     comments=Comment(feed=feed,p_id=project.id,name='Admin')
                 else:
                     email = EmailMessage(
-                    'Comment received!',
-                    '''Client has posted comment on their project,
-
-Project Name: '%s'
-Project Client: '%s'
-Comment: '%s' ''' % (
-    name,
-    temp,
-    feed,
-),
+                    'Comment Received!',
+                    'Client has posted comment on their project,\n\nProject Name: %s\nProject Client: %s\nComment: %s ' % (name,temp,feed,),
                     'noreply@semycolon.com',
                     [admin_mail],
-                    )
-                    email.send(fail_silently = False)
-                    email = EmailMessage(
-                    'Comment Posted!',
-                    '''You posted comment on the project,
-
-Project Name: '%s'
-Comment: '%s' ''' % (
-    name,
-    feed,
-),
-                    'noreply@semycolon.com',
-                    [temp],
                     )
                     email.send(fail_silently = False)
                     comments=Comment(feed=feed,p_id=project.id,name=first+' '+last)
@@ -110,34 +67,8 @@ Comment: '%s' ''' % (
                 last=request.user.last_name
                 if(first=='admin'):
                     email = EmailMessage(
-                    'Reply posted!',
-                    '''You posted reply to the comment on project,
-
-Project Name: '%s'
-Project Client: '%s'
-Comment: '%s'
-Reply: '%s' ''' % (
-    name,
-    temp,
-    comm,
-    feed,
-),
-                    'noreply@semycolon.com',
-                    [admin_mail],
-                    )
-                    email.send(fail_silently = False)
-
-                    email = EmailMessage(
                     'Reply received!',
-                    '''Admin replied to the comment on your project ,
-
-Project Name: '%s'
-Comment: '%s'
-Reply: '%s' ''' % (
-    name,
-    comm,
-    feed,
-),
+                    'Admin replied to the comment on your project,\n\nProject Name: %s\nComment: %s\nReply: %s ' % (name,comm,feed,),
                     'noreply@semycolon.com',
                     [temp],
                     )
@@ -146,39 +77,11 @@ Reply: '%s' ''' % (
                 else:
                     email = EmailMessage(
                     'Reply received!',
-                    '''Client has replied to the comment of their project,
-
-Project Name: '%s'
-Project Client: '%s'
-Comment: '%s'
-Reply: %s ''' % (
-    name,
-    temp,
-    comm,
-    feed,
-),
+                    'Client has replied to the comment of their project,\n\nProject Name: %s\nProject Client: %s\nComment: %s\nReply: %s ' % (name,temp,comm,feed,),
                     'noreply@semycolon.com',
                     [admin_mail],
                     )
                     email.send(fail_silently = False)
-                    email = EmailMessage(
-                    'Reply Posted!',
-                    '''You replied to the comment on your project,
-
-Project Name: '%s'
-Comment: '%s'
-Reply: '%s' ''' % (
-    name,
-    comm,
-    feed,
-),
-                    'noreply@semycolon.com',
-                    [temp],
-                    )
-                    email.send(fail_silently = False)
-
-
-
                     replys=Reply(feed=feed,c_id=c_id,name=first+' '+last)
                 replys.save()
         return render(request,'project.html',{'project':project,'client':client,'dev':dev,'feeds':feeds,'repli':repli})
@@ -229,41 +132,22 @@ def newProject(request):
                     complete_per = request.POST['complete_per']
                     description = request.POST['description']
                     temp = request.POST['person']  #client email
+                    uname=temp.username
                     email = EmailMessage(
                     'Project registered!',
-                    '''Your project is registered Successfully.
-
-Project related information is,
-
-Name: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s''' % (
-    name,
-    budget,
-    l,
-    dead_line,
-    complete_per,
-),
+                    'Your project is registered Successfully.\n\nProject related information is,\nName: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s' % (name,budget,l,dead_line,complete_per,),
                     'noreply@semycolon.com',
                     [temp],
                     )
                     email.send(fail_silently = False)
                     for i in l:
                         email = EmailMessage(
-'Project Assigned!',
-'''You are assigned with project work.
-
-Project related information is,
-
-Name: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s''' % (
-    name,
-    temp,
-    dead_line,
-    complete_per,
-    description,
-),
-                    'noreply@semycolon.com',
-                    [i],
-                    )
-                    email.send(fail_silently = False)
+                        'Project Assigned!',
+                        'You are assigned with project work.\n\nProject related information is,\nName: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s' % (name,temp,dead_line,complete_per, description,),
+                        'noreply@semycolon.com',
+                        [i],
+                        )
+                        email.send(fail_silently = False)
                     form.save()
                     Project.objects.filter(name=name).update(person=request.POST['person'])
                     Project.objects.filter(name=name).update(developer=str)
@@ -296,38 +180,18 @@ def remove_project(request,id):
             l=l.split(',')
             email = EmailMessage(
             'Project Deleted!',
-            '''Your project is succesfully deleted.
-
-Project related information is,
-
-Name: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s''' % (
-    name,
-    budget,
-    l,
-    dead_line,
-    complete_per,
-),
+            'Your project is succesfully deleted.\n\nProject related information is,\nName: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s' % (name,budget,l,dead_line,complete_per,),
             'noreply@semycolon.com',
             [temp],
             )
             email.send(fail_silently = False)
             for i in l:
                 email = EmailMessage(
-'Project Removed!',
-'''Project is removed from development.
-
-Project related information is,
-
-Name: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s''' % (
-    name,
-    temp,
-    dead_line,
-    complete_per,
-    description,
-),
-            'noreply@semycolon.com',
-            [i],
-            )
+                'Project Removed!',
+                'Project is removed from development.\n\nProject related information is,\nName: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s' % (name,temp,dead_line,complete_per,description,),
+                'noreply@semycolon.com',
+                [i],
+                )
                 email.send(fail_silently = False)
             pi.delete()
             messages.info(request,"Deleted Successfully")
@@ -348,17 +212,17 @@ def update_project(request,id):
             pi = Project.objects.get(pk=id)
             temp = pi.name
             temp = pi.person
+
             l=request.POST.getlist('developer')
             str=''
             for i in l:
                 str=str+i+','
+            return HttpResponse(str)
             project = ProjectRegistrationForm(request.POST, instance=pi)
             if project.is_valid():
                 dates=request.POST['dead_line']
                 dates = datetime.strptime(dates, '%Y-%m-%d')
                 dates= dates.date()
-#                if request.POST['name']!=temp:
-#                        messages.info(request,'Project With Same Name Already Exists !')
                 if dates < dt.date.today():
                     messages.info(request,'Date Must Of Future !')
                 else:
@@ -368,43 +232,6 @@ def update_project(request,id):
                     developer = request.POST['developer']
                     complete_per = request.POST['complete_per']
                     description = request.POST['description']
-                    email = EmailMessage(
-                    'Project Updated!',
-                    '''Your project details are updated.
-
-Project related information is,
-
-Name: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s''' % (
-    name,
-    budget,
-    l,
-    dead_line,
-    complete_per,
-),
-                    'noreply@semycolon.com',
-                    [temp],
-                    )
-                    email.send(fail_silently = False)
-                    for i in l:
-                        str=str+i+','
-                    for i in l:
-                        email = EmailMessage(
-'Project Assigned!',
-'''You are assigned with project work.
-
-Project related information is,
-
-Name: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s''' % (
-    name,
-    temp,
-    dead_line,
-    complete_per,
-    description,
-),
-                    'noreply@semycolon.com',
-                    [i],
-                    )
-                    email.send(fail_silently = False)
                     project.save()
                     if request.POST['person']!='set':
                         Project.objects.filter(id=pi.id).update(person=request.POST['person'])

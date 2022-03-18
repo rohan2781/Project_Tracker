@@ -34,11 +34,9 @@ def remove_developer(request,id):
         if request.method == "POST":
             pi = Developer.objects.get(pk=id)
             temp = pi.email
-            email_subject = 'Account removed Successfully'
-            email_body='Your position as Django developer from PTS has been removed.'
             email = EmailMessage(
-            email_subject,
-            email_body,
+            'Account removed Successfully',
+            'Your position as Django developer from PTS has been removed.',
             'noreply@semycolon.com',
             [temp],
             )
@@ -65,19 +63,11 @@ def update_developer(request,id):
                     email = developer.cleaned_data['email']
                     password = developer.cleaned_data['password']
             if request.POST['email']==temp:
-                    email_subject = 'Account information updated'
-                    email_body='''Thank you!! for regestering with PTS.
-
-Your updated credentials are,
-first_name: %s\nlast_name: %s\nemail: %s\npassword: %s''' % (
-    username,
-    last_name,
-    email,
-    password,
-)
+#                    email_subject = 'Account information updated'
+#                    email_body='Thank you!! for regestering with PTS.\n\nYour updated credentials are,\nfirst_name: %s\nlast_name: %s\nemail: %s\npassword: %s' % (username,last_name,email,password,)
                     email = EmailMessage(
-                    email_subject,
-                    email_body,
+                    'Account information updated',
+                    'Your updated credentials are,\n\nfirst_name: %s\nlast_name: %s\nemail: %s\npassword: %s' % (username,last_name,email,password,),
                     'noreply@semycolon.com',
                     [temp],
                     )
