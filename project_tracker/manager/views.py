@@ -7,17 +7,25 @@ from home.forms import ClientRegistration,DevRegistration
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from django.core.mail import EmailMessage
+from project.models import Project
+import datetime as dt
 
 def manager(request):
     if request.user.is_authenticated:
-        data = User.objects.all()
-        return render(request,'admin.html',{'data':data})
+        project = Project.objects.all()
+        j = 0
+        for i in project:
+            if i.dead_line < dt.date.today():
+                j += 1
+        developer = Developer.objects.all()
+        data = User.objects.all().exclude(username='admin')
+        return render(request,'dashboard.html',{'data':data, 'developer':developer, 'project':project, 'completed_project':j})
     else:
         return redirect('/login')
 # Create your views here.
 def admin_client(request):
     if request.user.is_authenticated:
-        client = User.objects.all()
+        client = User.objects.all().exclude(username='admin')
         return render(request,'client.html',{'client':client})
     else:
         return redirect('/login')
