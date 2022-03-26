@@ -217,7 +217,6 @@ def update_project(request,id):
             str=''
             for i in l:
                 str=str+i+','
-            return HttpResponse(str)
             project = ProjectRegistrationForm(request.POST, instance=pi)
             if project.is_valid():
                 dates=request.POST['dead_line']
@@ -255,5 +254,25 @@ def update_project(request,id):
                     j.password='set'
         project = ProjectRegistrationForm(instance=pi)
         return render(request,'update_project.html',{'form':project,'client':client,'pro':pro,'dev':dev})
+    else:
+        return redirect('/login')
+
+
+def delete_comm(request,id):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            pi = Comment.objects.get(pk=id)
+            ids=pi.p_id
+            try:
+                rep=Reply.objects.get(c_id=pi.id)
+                rep.delete()
+            except:
+                h='handeled'
+            pi.delete()
+            messages.info(request,"Comment Deleted Successfully")
+            return redirect('/project/'+str(ids))
+        else:
+            pi=Comment.objects.get(pk=id)
+        return render(request,'remove_comm.html',{'pi':pi})
     else:
         return redirect('/login')

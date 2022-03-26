@@ -7,4 +7,5 @@ urlpatterns = [
     path('projects/', views.projects, name='projects'),
     path('remove_project/<int:id>/',views.remove_project,name='remove_project'),
     path('<int:id>/',views.update_project,name='update_project'),
+    path('comment/<int:id>/',views.delete_comm,name='delete_comm'),
 ]

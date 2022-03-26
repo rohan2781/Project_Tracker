@@ -43,6 +43,8 @@ def logins(request):
                         client=User.objects.get(email=email)
                         login(request, client)
                         return redirect('/account/'+str(client.id))
+                    else:
+                        messages.info(request,"Invalid Credentials")
             else:
                 messages.info(request,"Invalid Credentials")
     else:
