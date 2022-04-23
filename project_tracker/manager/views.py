@@ -19,7 +19,11 @@ def manager(request):
                 j += 1
         developer = Developer.objects.all()
         data = User.objects.all().exclude(username='admin')
-        return render(request,'dashboard.html',{'data':data, 'developer':developer, 'project':project, 'completed_project':j})
+        l=0
+        for i in project:
+            if i.complete_per==100:
+             l+=1
+        return render(request,'dashboard.html',{'data':data, 'developer':developer, 'project':project, 'completed_project':j,'l':l})
     else:
         return redirect('/login')
 # Create your views here.

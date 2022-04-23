@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib import messages
+from httplib2 import Http
 from .models import *
 from .forms import *
 from home.models import Client
@@ -14,6 +15,10 @@ from django.core.mail import EmailMessage
 
 def project(request,id):
     if request.user.is_authenticated:
+        if request.user.username=='admin':
+            template='admin.html'
+        else:
+            template='base1.html'
         project=Project.objects.get(pk=id)
         admin_mail = 'ptssystemcommercial@gmail.com'
         temp = project.person
@@ -84,7 +89,7 @@ def project(request,id):
                     email.send(fail_silently = False)
                     replys=Reply(feed=feed,c_id=c_id,name=first+' '+last)
                 replys.save()
-        return render(request,'project.html',{'project':project,'client':client,'dev':dev,'feeds':feeds,'repli':repli})
+        return render(request,'project.html',{'project':project,'client':client,'dev':dev,'feeds':feeds,'repli':repli,'template':template})
     else:
         return redirect('/login')
 
@@ -121,18 +126,13 @@ def newProject(request):
                 if len(l)==0:
                     messages.info(request,'Please Select Atleast one Developer !!')
                     return render(request, 'new_project.html', context)
-                if request.POST['person']=='Select':
-                    messages.info(request,'Please Select A Client !!')
-                    return render(request, 'new_project.html', context)
                 else:
                     name = request.POST['name']
                     budget = request.POST['efforts']
                     dead_line = request.POST['dead_line']
-                    developer = request.POST['developer']
                     complete_per = request.POST['complete_per']
                     description = request.POST['description']
                     temp = request.POST['person']  #client email
-                    uname=temp.username
                     email = EmailMessage(
                     'Project registered!',
                     'Your project is registered Successfully.\n\nProject related information is,\nName: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s' % (name,budget,l,dead_line,complete_per,),

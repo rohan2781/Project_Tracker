@@ -50,7 +50,7 @@
     <ul class="nav navbar-nav d-md-down-none">
       {% block navigate %}
       <li class="nav-item px-3">
-        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="{% url 'client' user.id %}">Home</a>
       </li>
       {% endblock %}
       <!--<li class="nav-item px-3">-->
@@ -119,7 +119,7 @@
                 Home
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-home"></i> Home</a>
+                <a class="nav-link" href="{% url 'client' user.id %}"><i class="fa fa-home"></i> Home</a>
             </li>
             {% endblock %}
             {% block client %}
@@ -169,7 +169,7 @@
                 <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> Register Project</a>
               </li>-->
               <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-paper-plane ml-2"></i> View Project's</a>
+                <a class="nav-link" href="{% url 'client' user.id %}"><i class="fa fa-paper-plane ml-2"></i> View Project's</a>
               </li>
               <!-- <li class="nav-item">
                 <a class="nav-link" href="#"><i class="fa fa-plus ml-2"></i> New Task</a>
@@ -214,13 +214,11 @@
         {% endblock breadcrumb%}
 
         <!-- Breadcrumb Menu-->
-        <li class="breadcrumb-menu d-md-down-none">
-          <div class="btn-group" role="group" aria-label="Button group">
-            <a class="btn" href="#"><i class="fa fa-comments"></i></a>
-            <a class="btn" href="#"><i class="fa fa-tachometer-alt"></i> &nbsp;Dashboard</a>
-            <a class="btn" href="#"><i class="fa fa-cog"></i> &nbsp;Settings</a>
-          </div>
-        </li>
+          <li class="breadcrumb-menu d-md-down-none">
+            <div class="btn-group" role="group" aria-label="Button group">
+              Project_Tracker
+            </div>
+          </li>
       </ol>
 {% block content %}
 {% endblock %}

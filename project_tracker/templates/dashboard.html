@@ -109,13 +109,13 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark"><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
           <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item" style='padding:5px'> <a class="nav-link" style='font-size:15px' href="{% url 'sign-up' %}" data-abc="true">Register Client/Dev</a> </li>
-              <li class="nav-item" style='padding:5px'> <a class="nav-link" style='font-size:15px' href="{% url 'admin_client' %}" data-abc="true">View / Edit Clients</a> </li>
-              <li class="nav-item" style='padding:5px'> <a class="nav-link" style='font-size:15px' href="{% url 'new_project' %}" data-abc="true">Register Project</a> </li>
-              <li class="nav-item" style='padding:5px'> <a class="nav-link" style='font-size:15px' href="{% url 'projects' %}" data-abc="true">View / Edit Projects</a> </li>
-              <li class="nav-item" style='padding:5px'> <a class="nav-link" style='font-size:15px' href="{% url 'view_developers' %}" data-abc="true">View / Edit Developers</a> </li>
+              <li class="nav-item" style='padding:7px'> <a class="nav-link" style='font-size:15px' href="{% url 'sign-up' %}" data-abc="true">Register Client/Dev</a> </li>
+              <li class="nav-item" style='padding:7px'> <a class="nav-link" style='font-size:15px' href="{% url 'admin_client' %}" data-abc="true">View / Edit Clients</a> </li>
+              <li class="nav-item" style='padding:7px'> <a class="nav-link" style='font-size:15px' href="{% url 'new_project' %}" data-abc="true">Register Project</a> </li>
+              <li class="nav-item" style='padding:7px'> <a class="nav-link" style='font-size:15px' href="{% url 'projects' %}" data-abc="true">View / Edit Projects</a> </li>
+              <li class="nav-item" style='padding:7px'> <a class="nav-link" style='font-size:15px' href="{% url 'view_developers' %}" data-abc="true">View / Edit Developers</a> </li>
             </ul>
-            <form onsubmit="event.preventDefault()" class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" placeholder="Search"> <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> </form>
+            <!--<form onsubmit="event.preventDefault()" class="form-inline my-2 my-lg-0"> <input class="form-control mr-sm-2" type="text" placeholder="Search"> <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button> </form>-->
           </div>
         </nav>
       </div>
@@ -204,7 +204,6 @@
           <p>Ongoing Projects</p>
         </div>
         <div class="chart-wrapper px-3" style="height:70px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-          <canvas id="card-chart1" class="chart chartjs-render-monitor" height="70" width="248" style="display: block; width: 248px; height: 70px;"></canvas>
         </div>
       </div>
     </div>
@@ -214,13 +213,13 @@
       <div class="card text-white bg-info">
         <div class="card-body pb-0">
           <button type="button" class="btn btn-transparent p-0 float-right">
-            <i class="fa fa-cog"></i>
+            
           </button>
-          <h4 class="mb-0">{{completed_project}}</h4>
+          <h4 class="mb-0">{{l}}</h4>
           <p>Completed Projects</p>
         </div>
         <div class="chart-wrapper px-3" style="height:70px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-          <canvas id="card-chart2" class="chart chartjs-render-monitor" height="70" width="248" style="display: block; width: 248px; height: 70px;"></canvas>
+          
         </div>
       </div>
     </div>
@@ -242,7 +241,6 @@
           <p>Registered Clients</p>
         </div>
         <div class="chart-wrapper" style="height:70px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-          <canvas id="card-chart3" class="chart chartjs-render-monitor" height="70" width="280" style="display: block; width: 280px; height: 70px;"></canvas>
         </div>
       </div>
     </div>
@@ -264,7 +262,6 @@
           <p>Developers</p>
         </div>
         <div class="chart-wrapper px-3" style="height:70px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-          <canvas id="card-chart4" class="chart chartjs-render-monitor" height="70" width="248" style="display: block; width: 248px; height: 70px;"></canvas>
         </div>
       </div>
     </div>
