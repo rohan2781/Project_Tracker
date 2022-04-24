@@ -122,7 +122,8 @@ def newProject(request):
                 l=request.POST.getlist('developer')
                 str=''
                 for i in l:
-                    str=str+i+','
+                    dev_name=Developer.objects.get(email=i)
+                    str=str+dev_name.first_name+' '+dev_name.last_name+','
                 if len(l)==0:
                     messages.info(request,'Please Select Atleast one Developer !!')
                     return render(request, 'new_project.html', context)
@@ -133,9 +134,11 @@ def newProject(request):
                     complete_per = request.POST['complete_per']
                     description = request.POST['description']
                     temp = request.POST['person']  #client email
+                    client_name=User.objects.get(email=temp)
+                    client_name=client_name.username+' '+client_name.last_name
                     email = EmailMessage(
                     'Project registered!',
-                    'Your project is registered Successfully.\n\nProject related information is,\nName: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s' % (name,budget,l,dead_line,complete_per,),
+                    'Your project is registered Successfully.\n\nProject related information is,\nName: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s' % (name,budget,str,dead_line,complete_per,),
                     'noreply@semycolon.com',
                     [temp],
                     )
