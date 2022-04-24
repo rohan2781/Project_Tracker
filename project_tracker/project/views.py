@@ -146,7 +146,7 @@ def newProject(request):
                     for i in l:
                         email = EmailMessage(
                         'Project Assigned!',
-                        'You are assigned with project work.\n\nProject related information is,\nName: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s' % (name,temp,dead_line,complete_per, description,),
+                        'You are assigned with project work.\n\nProject related information is,\nName: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s' % (name,client_name,dead_line,complete_per, description,),
                         'noreply@semycolon.com',
                         [i],
                         )
@@ -168,10 +168,10 @@ def newProject(request):
     else:
         return redirect('/login')
 
-
 def remove_project(request,id):
     if request.user.is_authenticated:
         if request.method == "POST":
+            dev = Developer.objects.all()
             pi = Project.objects.get(pk=id)
             name = pi.name
             budget = pi.efforts
@@ -179,6 +179,8 @@ def remove_project(request,id):
             complete_per = pi.complete_per
             description = pi.description
             temp = pi.person
+            client_name=User.objects.get(email=temp)
+            client_name=client_name.username+' '+client_name.last_name
             l=pi.developer
             l=l.split(',')
             email = EmailMessage(
@@ -191,7 +193,7 @@ def remove_project(request,id):
             for i in l:
                 email = EmailMessage(
                 'Project Removed!',
-                'Project is removed from development.\n\nProject related information is,\nName: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s' % (name,temp,dead_line,complete_per,description,),
+                'Project is removed from development.\n\nProject related information is,\nName: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s' % (name,client_name,dead_line,complete_per,description,),
                 'noreply@semycolon.com',
                 [i],
                 )
