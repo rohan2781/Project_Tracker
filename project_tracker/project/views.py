@@ -121,7 +121,9 @@ def newProject(request):
                     return render(request, 'new_project.html', context)
                 l=request.POST.getlist('developer')
                 str=''
+                str1=''
                 for i in l:
+                    str1=str1+i+','
                     dev_name=Developer.objects.get(email=i)
                     str=str+dev_name.first_name+' '+dev_name.last_name+','
                 if len(l)==0:
@@ -153,7 +155,7 @@ def newProject(request):
                         email.send(fail_silently = False)
                     form.save()
                     Project.objects.filter(name=name).update(person=request.POST['person'])
-                    Project.objects.filter(name=name).update(developer=str)
+                    Project.objects.filter(name=name).update(developer=str1)
                     created = True
                     form = ProjectRegistrationForm()
                     context = {'created': created,'form': form,'client': client,'dev':dev}
