@@ -185,19 +185,23 @@ def remove_project(request,id):
             client_name=client_name.username+' '+client_name.last_name
             l=pi.developer
             l=l.split(',')
+            str = ''
+            for i in range(len(l)-1):
+                dev_name=Developer.objects.get(email=l[i])
+                str=str+dev_name.first_name+' '+dev_name.last_name+','
             email = EmailMessage(
             'Project Deleted!',
-            'Your project is succesfully deleted.\n\nProject related information is,\nName: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s' % (name,budget,l,dead_line,complete_per,),
+            'Your project is succesfully deleted.\n\nProject related information is,\nName: %s\nBudget: %s\nDevelopers: %s\nDead Line: %s\nEstimated Completion: %s' % (name,budget,str,dead_line,complete_per,),
             'noreply@semycolon.com',
             [temp],
             )
             email.send(fail_silently = False)
-            for i in l:
+            for i in range(len(l)-1):
                 email = EmailMessage(
                 'Project Removed!',
                 'Project is removed from development.\n\nProject related information is,\nName: %s\nClient: %s\nDead Line: %s\nEstimated Completion: %s\nProject Description: %s' % (name,client_name,dead_line,complete_per,description,),
                 'noreply@semycolon.com',
-                [i],
+                [l[i]],
                 )
                 email.send(fail_silently = False)
             pi.delete()
