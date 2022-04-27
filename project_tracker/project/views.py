@@ -1,7 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from httplib2 import Http
 from .models import *
 from .forms import *
 from home.models import Client
@@ -223,7 +222,6 @@ def update_project(request,id):
             pi = Project.objects.get(pk=id)
             temp = pi.name
             temp = pi.person
-
             l=request.POST.getlist('developer')
             str=''
             for i in l:
